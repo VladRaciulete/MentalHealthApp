@@ -1,4 +1,4 @@
-package com.example.mentalhealth
+package com.example.mentalhealth.bottomMenu
 
 import androidx.compose.foundation.background
 import androidx.compose.material3.Icon
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -23,10 +22,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.mentalhealth.ui.theme.*
 
 @Composable
 fun BottomMenu(
+    navController: NavController,
     items: List<BottomMenuItem>,
     modifier: Modifier = Modifier,
     initialSelectedItemIndex: Int = 0
@@ -44,11 +45,13 @@ fun BottomMenu(
     ) {
         items.forEachIndexed { index, item ->
             BottomMenuItem(
+                navController = navController,
                 item = item,
                 isSelected = index == selectedItemIndex,
+                route = item.route
             ) {
                 selectedItemIndex = index
-                //Handle Click
+                navController.navigate(item.route)
             }
         }
     }
@@ -56,8 +59,10 @@ fun BottomMenu(
 
 @Composable
 fun BottomMenuItem(
+    navController: NavController,
     item: BottomMenuItem,
     isSelected: Boolean = false,
+    route: String,
     onItemClick: () -> Unit
 ) {
     Column(
@@ -77,13 +82,13 @@ fun BottomMenuItem(
                     else
                         Color.Transparent
                 )
-                .padding(10.dp)
+                .padding(5.dp)
         ) {
             Icon(
                 painter = painterResource(id = item.iconId),
                 contentDescription = item.title,
                 tint = if(isSelected) SelectedColor else UnselectedColor,
-                modifier = Modifier.size(25.dp)
+                modifier = Modifier.size(35.dp)
             )
         }
     }
