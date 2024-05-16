@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MentalHealth</string>
+    <string name="welcome_back">Bine ai revenit!</string>
+    <string name="email_address">Adresa de email</string>
+    <string name="password">Parola</string>
+    <string name="log_in">Conecteaza-te</string>
+    <string name="sign_up">Inregistreaza-te</string>
+    <string name="forgot_password">Ai uitat parola?</string>
+    <string name="no_account">Nu ai deja un cont?</string>
+    <string name="create_an_account">Creaza un cont</string>
+    <string name="first_name">Prenume</string>
+    <string name="last_name">Nume</string>
+    <string name="birth_date">Data de nastere</string>
+    <string name="selected_date">Data selectata</string>
+    <string name="gender">Gen</string>
+    <string name="profession">Profesie</string>
+    <string name="occupation">Ocupatie</string>
+    <string name="marital_status">Stare Civila</string>
+    <string name="living_area">Mediu</string>
+    <string name="public_figure">Persoana Publica</string>
+    <string name="back">Inapoi</string>
+    <string name="next">Inainte</string>
+    <string name="step">Pas</string>
+    <string name="please_fill_in_the_fields">Va rugam introduceti datele!</string>
+    <string name="account_created_successfully">Cont creat cu succes!</string>
 </resources>

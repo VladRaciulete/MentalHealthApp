@@ -1,4 +1,4 @@
-package com.example.mentalhealth.screens
+package com.example.mentalhealth.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,14 +17,14 @@ import com.example.mentalhealth.navigation.Screen
 import com.example.mentalhealth.ui.theme.BackgroundColor
 
 @Composable
-fun RecommendationsScreen(navController: NavController) {
+fun AccountScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundColor)
     ) {
         Text(
-            text = "Recommendations Screen!",
+            text = "Account Screen!",
             fontSize = 24.sp,
             color = Color.White,
             modifier = Modifier
@@ -38,7 +38,7 @@ fun RecommendationsScreen(navController: NavController) {
                 BottomMenuItem("Recommendations", R.drawable.ic_recommended, Screen.RecommendationsScreen.route),
                 BottomMenuItem("Account", R.drawable.ic_account, Screen.AccountScreen.route)
             ),
-            initialSelectedItemIndex = 2,
+            initialSelectedItemIndex = 3,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }

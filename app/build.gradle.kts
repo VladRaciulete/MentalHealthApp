@@ -1,15 +1,24 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-}
 
+    //Dagger Hilt
+    id("com.google.dagger.hilt.android")
+    id ("kotlin-kapt")
+
+    //Firebase
+    id("com.google.gms.google-services")
+
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+}
 android {
     namespace = "com.example.mentalhealth"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.mentalhealth"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -67,7 +76,27 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("androidx.compose.material:material-icons-extended-android:1.6.7")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.material.icons.extended.android)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.google.firebase.auth)
+    implementation(libs.firebase.firestore)
+
+    //Dagger Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    //kapt("androidx.hilt:hilt-compiler:1.2.0")
+    //implementation("androidx.hilt:hilt-compiler:1.2.0")
+    //kapt("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    //implementation ("com.google.dagger:dagger:2.48.1")
+    //kapt ("com.google.dagger:dagger-compiler:2.48.1")
+}
+
+kapt {
+    correctErrorTypes = true
 }
