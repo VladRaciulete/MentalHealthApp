@@ -1,4 +1,4 @@
-package com.example.mentalhealth
+package com.example.mentalhealth.presentation
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
@@ -7,9 +7,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -151,5 +153,18 @@ fun CustomDatePicker (
         ) {
             Text(text = "Select Date", color = TextWhiteColor)
         }
+    }
+}
+
+@Composable
+fun CustomProgressIndicator(){
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundColor.copy(alpha = 0.7f))
+    ){
+        CircularProgressIndicator(color = AccentColor)
     }
 }

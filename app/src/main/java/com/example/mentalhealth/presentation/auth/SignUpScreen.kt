@@ -32,12 +32,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mentalhealth.CustomDatePicker
-import com.example.mentalhealth.CustomDropDownMenu
+import com.example.mentalhealth.presentation.CustomDatePicker
+import com.example.mentalhealth.presentation.CustomDropDownMenu
 import com.example.mentalhealth.R
-import com.example.mentalhealth.Validator
+import com.example.mentalhealth.domain.usecase.validator.Validator
 import com.example.mentalhealth.navigation.Screen
+import com.example.mentalhealth.presentation.CustomProgressIndicator
 import com.example.mentalhealth.ui.theme.*
+import com.example.mentalhealth.utils.UiState
 
 @Composable
 fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) {
@@ -193,7 +195,6 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
             onClick = {
                 viewModel.currentStep.value--
                 if (navController.popBackStack()) {
-
                 }
                 else {
                     navController.navigate(Screen.LogInScreen.route)
@@ -211,11 +212,7 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
 
         Button(
             onClick = {
-                if(Validator.validateSignUpScreen1(
-                        firstName = viewModel.firstName.value,
-                        lastName = viewModel.lastName.value,
-                        emailAddress = viewModel.emailAddress.value,
-                        password = viewModel.password.value)){
+                if (viewModel.validateFieldsScreen1()){
                     viewModel.currentStep.value++
                     navController.navigate(Screen.SignUpScreenStep2.route)
                 }
@@ -349,12 +346,7 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
 
         Button(
             onClick = {
-                if(Validator.validateSignUpScreen2(
-                        date = viewModel.birthDate.value,
-                        gender = viewModel.gender.value,
-                        profession = viewModel.profession.value,
-                        occupation = viewModel.occupation.value)
-                    ){
+                if (viewModel.validateFieldsScreen2()){
                     viewModel.currentStep.value++
                     navController.navigate(Screen.SignUpScreenStep3.route)
                 }
@@ -440,11 +432,7 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
 
             Button(
                 onClick = {
-                    if(Validator.validateSignUpScreen3(
-                            maritalStatus = viewModel.maritalStatus.value,
-                            livingArea = viewModel.livingArea.value,
-                            publicFigure = viewModel.publicFigure.value
-                    )){
+                    if (viewModel.validateFieldsScreen3()){
                         viewModel.signUp()
 
                         Toast.makeText(appContext, accountCreatedSuccessfully, Toast.LENGTH_SHORT).show()
@@ -480,6 +468,17 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                 .padding(bottom = 25.dp, start = 15.dp)
         ) {
             Text(text = stringResource(id = R.string.back), color = TextWhiteColor)
+        }
+    }
+    when(viewModel.appStateViewModel.uiState.value){
+        is UiState.Idle -> {
+        }
+        is UiState.Loading -> {
+            CustomProgressIndicator()
+        }
+        is UiState.Success -> {
+        }
+        is UiState.Error -> {
         }
     }
 }

@@ -12,11 +12,13 @@ import com.example.mentalhealth.presentation.auth.*
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
-
     val signUpViewModel: SignUpViewModel = viewModel()
     val logInViewModel: LogInViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = "auth") {
+    NavHost(
+        navController = navController,
+        startDestination = if(logInViewModel.checkUserAuthenticatedUseCase()) "journal" else "auth"
+    ) {
         navigation(
             startDestination = Screen.LogInScreen.route,
             route = "auth",

@@ -39,12 +39,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mentalhealth.R
-import com.example.mentalhealth.Validator
+import com.example.mentalhealth.domain.usecase.validator.Validator
 import com.example.mentalhealth.navigation.Screen
+import com.example.mentalhealth.presentation.CustomProgressIndicator
 import com.example.mentalhealth.ui.theme.*
+import com.example.mentalhealth.utils.UiState
 
 @Composable
-fun LogInScreen(navController: NavController, viewModel: LogInViewModel){
+fun LogInScreen(
+    navController: NavController,
+    viewModel: LogInViewModel
+){
     var appContext = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -144,7 +149,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel){
 
         Button(
             onClick = {
-                if (Validator.validateLogInFields(viewModel.emailAddress.value, viewModel.password.value)){
+                if (viewModel.validateFields()){
                     viewModel.logIn()
                     navController.navigate("journal") {
                         popUpTo("auth") {
@@ -153,7 +158,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel){
                     }
                 }
                 else {
-                    Toast.makeText(appContext, pleaseFillInTheFiledsText,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(appContext, pleaseFillInTheFiledsText, Toast.LENGTH_SHORT).show()
                 }
             },
             colors = ButtonDefaults.buttonColors(
@@ -180,6 +185,17 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel){
             ) {
                 navController.navigate(Screen.SignUpScreenStep1.route)
             }
+        }
+    }
+    when(viewModel.appStateViewModel.uiState.value){
+        is UiState.Idle -> {
+        }
+        is UiState.Loading -> {
+            CustomProgressIndicator()
+        }
+        is UiState.Success -> {
+        }
+        is UiState.Error -> {
         }
     }
 }

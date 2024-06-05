@@ -1,4 +1,4 @@
-package com.example.mentalhealth
+package com.example.mentalhealth.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

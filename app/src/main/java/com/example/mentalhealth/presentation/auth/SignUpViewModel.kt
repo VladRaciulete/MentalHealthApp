@@ -1,17 +1,21 @@
 package com.example.mentalhealth.presentation.auth
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import androidx.lifecycle.viewModelScope
+import com.example.mentalhealth.domain.usecase.auth.SignUpUseCase
+import com.example.mentalhealth.domain.usecase.validator.Validator
+import com.example.mentalhealth.presentation.AppStateViewModel
+import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.LocalDate
-import java.util.Date
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    val auth: FirebaseAuth
+    val signUpUseCase: SignUpUseCase,
+    val appStateViewModel: AppStateViewModel
 ) : ViewModel() {
     init {
     }
@@ -57,14 +61,49 @@ class SignUpViewModel @Inject constructor(
     val livingAreaList = listOf("Rural","Urban")
     val publicFigureList = listOf("Yes","No")
 
-    fun signUp(){
-        auth.createUserWithEmailAndPassword(emailAddress.value, password.value).addOnCompleteListener {
-            if(it.isSuccessful){
-                Log.d("TAG","Account Created Successfully!")
-                println("Account Created Successfully!")
-            }
-            else {
-                Log.d("TAG","There was an an error while creating the account!")
+    fun validateFieldsScreen1() : Boolean {
+        return Validator.validateSignUpScreen1(
+            firstName = firstName.value,
+            lastName = lastName.value,
+            emailAddress = emailAddress.value,
+            password = password.value)
+    }
+
+    fun validateFieldsScreen2() : Boolean {
+        return Validator.validateSignUpScreen2(
+            date = birthDate.value,
+            gender = gender.value,
+            profession = profession.value,
+            occupation = occupation.value)
+    }
+
+    fun validateFieldsScreen3() : Boolean {
+        return Validator.validateSignUpScreen3(
+            maritalStatus = maritalStatus.value,
+            livingArea = livingArea.value,
+            publicFigure = publicFigure.value)
+    }
+
+    fun signUp() {
+        viewModelScope.launch {
+            appStateViewModel.authState.value = AuthState.SigningUp
+            appStateViewModel.uiState.value = UiState.Loading
+            val signUpResult = signUpUseCase(
+                firstName.value,
+                lastName.value,
+                emailAddress.value,
+                password.value,
+                birthDate.value,
+                gender.value,
+                profession.value,
+                occupation.value,
+                maritalStatus.value,
+                livingArea.value,
+                publicFigure.value
+            )
+            appStateViewModel.uiState.value = if (signUpResult.isSuccess) UiState.Success else UiState.Error(signUpResult.exceptionOrNull()?.message ?: "signup error")
+            if (signUpResult.isSuccess) {
+                appStateViewModel.authState.value = AuthState.Authenticated
             }
         }
     }

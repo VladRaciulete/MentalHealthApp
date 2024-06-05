@@ -62,7 +62,7 @@ fun BottomMenuItem(
     navController: NavController,
     item: BottomMenuItem,
     isSelected: Boolean = false,
-    route: String,
+    route: String,//TODO
     onItemClick: () -> Unit
 ) {
     Column(
