@@ -1,10 +1,10 @@
-package com.example.mentalhealth.presentation.auth
+package com.example.mentalhealth.presentation.auth.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentalhealth.domain.usecase.auth.SignUpUseCase
-import com.example.mentalhealth.domain.usecase.validator.Validator
+import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
 import com.example.mentalhealth.utils.UiState
@@ -105,6 +105,30 @@ class SignUpViewModel @Inject constructor(
             if (signUpResult.isSuccess) {
                 appStateViewModel.authState.value = AuthState.Authenticated
             }
+
+            firstName.value = ""
+            lastName.value = ""
+            emailAddress.value = ""
+            password.value = ""
+            birthDate.value = ""
+            gender.value = ""
+            profession.value = ""
+            occupation.value = ""
+            maritalStatus.value = ""
+            livingArea.value = ""
+            publicFigure.value = ""
+
+            firstNameShowError.value = false
+            lastNameShowError.value = false
+            emailAddressShowError.value = false
+            passwordShowError.value = false
+            birthDateShowError.value = false
+            genderShowError.value = false
+            professionShowError.value = false
+            occupationShowError.value = false
+            maritalStatusShowError.value = false
+            livingAreaShowError.value = false
+            publicFigureShowError.value = false
         }
     }
 }

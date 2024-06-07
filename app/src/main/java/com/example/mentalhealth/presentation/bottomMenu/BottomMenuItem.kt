@@ -1,4 +1,4 @@
-package com.example.mentalhealth.bottomMenu
+package com.example.mentalhealth.presentation.bottomMenu
 
 import androidx.annotation.DrawableRes
 

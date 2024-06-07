@@ -1,4 +1,4 @@
-package com.example.mentalhealth.domain.usecase.validator
+package com.example.mentalhealth.utils
 
 object Validator {
     fun validateFirstName(firstName: String) : Boolean {

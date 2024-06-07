@@ -90,12 +90,7 @@ dependencies {
     //Dagger Hilt
     implementation(libs.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
-    //kapt("androidx.hilt:hilt-compiler:1.2.0")
-    //implementation("androidx.hilt:hilt-compiler:1.2.0")
-    //kapt("androidx.hilt:hilt-navigation-compose:1.2.0")
-
-    //implementation ("com.google.dagger:dagger:2.48.1")
-    //kapt ("com.google.dagger:dagger-compiler:2.48.1")
+    implementation (libs.androidx.hilt.navigation.compose)
 }
 
 kapt {

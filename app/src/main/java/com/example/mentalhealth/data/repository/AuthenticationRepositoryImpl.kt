@@ -7,7 +7,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val auth : FirebaseAuth,
+    private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : AuthenticationRepository {
 
@@ -15,7 +15,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
         return auth.currentUser != null
     }
 
-    suspend override fun firebaseSignUp(
+    override suspend fun firebaseSignUp(
         firstName: String,
         lastName: String,
         emailAddress: String,
@@ -27,7 +27,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
         maritalStatus: String,
         livingArea: String,
         publicFigure: String
-    ) : Result<Unit> {
+    ): Result<Unit> {
         return try {
             val signUpResult = auth.createUserWithEmailAndPassword(emailAddress, password).await()
             val user = signUpResult.user ?: throw Exception("Sign Up failed!")
@@ -53,16 +53,21 @@ class AuthenticationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun firebaseLogIn(emailAddress: String, password: String) : Result<Unit> {
+    override suspend fun firebaseLogIn(emailAddress: String, password: String): Result<Unit> {
         return try {
-            auth.signInWithEmailAndPassword(emailAddress, password)
+            auth.signInWithEmailAndPassword(emailAddress, password).await()
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    override fun firebaseLogOut() {
-        auth.signOut()
+    override suspend fun firebaseLogOut(): Result<Unit> {
+        return try {
+            auth.signOut()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

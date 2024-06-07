@@ -1,4 +1,4 @@
-package com.example.mentalhealth.presentation.auth
+package com.example.mentalhealth.presentation.auth.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -39,18 +39,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mentalhealth.R
-import com.example.mentalhealth.domain.usecase.validator.Validator
-import com.example.mentalhealth.navigation.Screen
+import com.example.mentalhealth.utils.Validator
+import com.example.mentalhealth.presentation.navigation.Screen
 import com.example.mentalhealth.presentation.CustomProgressIndicator
+import com.example.mentalhealth.presentation.auth.viewmodels.LogInViewModel
 import com.example.mentalhealth.ui.theme.*
+import com.example.mentalhealth.utils.AuthState
 import com.example.mentalhealth.utils.UiState
 
 @Composable
 fun LogInScreen(
     navController: NavController,
     viewModel: LogInViewModel
-){
-    var appContext = LocalContext.current
+) {
+    val appContext = LocalContext.current
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -58,7 +61,8 @@ fun LogInScreen(
             .fillMaxSize()
             .background(BackgroundColor)
     ) {
-        Text(text = stringResource(id = R.string.welcome_back),
+        Text(
+            text = stringResource(id = R.string.welcome_back),
             style = MaterialTheme.typography.headlineMedium,
         )
 
@@ -71,11 +75,14 @@ fun LogInScreen(
                 viewModel.emailAddressShowError.value = true
             },
             label = {
-                Text(text = stringResource(id = R.string.email_address), color = UnfocusedTextWhiteColor)
+                Text(
+                    text = stringResource(id = R.string.email_address),
+                    color = UnfocusedTextWhiteColor
+                )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor  = TextFieldBackgroundColor,
-                unfocusedContainerColor  = Color.Transparent,
+                focusedContainerColor = TextFieldBackgroundColor,
+                unfocusedContainerColor = Color.Transparent,
                 focusedTextColor = TextWhiteColor,
                 unfocusedTextColor = UnfocusedTextWhiteColor,
                 errorTextColor = ErrorTextColor
@@ -86,7 +93,9 @@ fun LogInScreen(
             ),
             singleLine = true,
             maxLines = 1,
-            isError = viewModel.emailAddressShowError.value && !Validator.validateEmailAddress(viewModel.emailAddress.value)
+            isError = viewModel.emailAddressShowError.value && !Validator.validateEmailAddress(
+                viewModel.emailAddress.value
+            )
         )
 
         Spacer(modifier = Modifier.height(15.dp))
@@ -104,8 +113,8 @@ fun LogInScreen(
                 Text(text = stringResource(id = R.string.password), color = UnfocusedTextWhiteColor)
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor  = TextFieldBackgroundColor,
-                unfocusedContainerColor  = Color.Transparent,
+                focusedContainerColor = TextFieldBackgroundColor,
+                unfocusedContainerColor = Color.Transparent,
                 focusedTextColor = TextWhiteColor,
                 unfocusedTextColor = UnfocusedTextWhiteColor,
                 errorTextColor = ErrorTextColor
@@ -121,15 +130,14 @@ fun LogInScreen(
                         viewModel.passwordVisible.value = !viewModel.passwordVisible.value
                     }
                 ) {
-                    if(viewModel.passwordVisible.value) {
-                        Icon(Icons.Filled.Visibility,contentDescription = "Hide Password")
-                    }
-                    else {
-                        Icon(Icons.Filled.VisibilityOff,contentDescription = "Show Password")
+                    if (viewModel.passwordVisible.value) {
+                        Icon(Icons.Filled.Visibility, contentDescription = "Hide Password")
+                    } else {
+                        Icon(Icons.Filled.VisibilityOff, contentDescription = "Show Password")
                     }
                 }
             },
-            visualTransformation = if(viewModel.passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (viewModel.passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
             isError = viewModel.passwordShowError.value && !Validator.validatePassword(viewModel.password.value)
         )
 
@@ -145,20 +153,15 @@ fun LogInScreen(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        var pleaseFillInTheFiledsText = stringResource(id = R.string.please_fill_in_the_fields)
+        val pleaseFillInTheFieldsText = stringResource(id = R.string.please_fill_in_the_fields)
+        val invalidEmailOrPasswordText = stringResource(id = R.string.invalid_email_or_password)
 
         Button(
             onClick = {
-                if (viewModel.validateFields()){
+                if (viewModel.validateFields()) {
                     viewModel.logIn()
-                    navController.navigate("journal") {
-                        popUpTo("auth") {
-                            inclusive = true
-                        }
-                    }
-                }
-                else {
-                    Toast.makeText(appContext, pleaseFillInTheFiledsText, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(appContext, pleaseFillInTheFieldsText, Toast.LENGTH_SHORT).show()
                 }
             },
             colors = ButtonDefaults.buttonColors(
@@ -187,14 +190,28 @@ fun LogInScreen(
             }
         }
     }
-    when(viewModel.appStateViewModel.uiState.value){
+
+    if (viewModel.appStateViewModel.authState.value == AuthState.Authenticated) {
+        navController.navigate("journal") {
+            popUpTo("auth") {
+                inclusive = true
+            }
+        }
+    } else {
+        //Toast.makeText(appContext, invalidEmailOrPasswordText, Toast.LENGTH_SHORT).show()
+    }
+
+    when (viewModel.appStateViewModel.uiState.value) {
         is UiState.Idle -> {
         }
+
         is UiState.Loading -> {
             CustomProgressIndicator()
         }
+
         is UiState.Success -> {
         }
+
         is UiState.Error -> {
         }
     }

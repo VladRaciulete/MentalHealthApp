@@ -1,4 +1,4 @@
-package com.example.mentalhealth.presentation.auth
+package com.example.mentalhealth.presentation.auth.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -35,9 +35,10 @@ import androidx.navigation.NavController
 import com.example.mentalhealth.presentation.CustomDatePicker
 import com.example.mentalhealth.presentation.CustomDropDownMenu
 import com.example.mentalhealth.R
-import com.example.mentalhealth.domain.usecase.validator.Validator
-import com.example.mentalhealth.navigation.Screen
+import com.example.mentalhealth.utils.Validator
+import com.example.mentalhealth.presentation.navigation.Screen
 import com.example.mentalhealth.presentation.CustomProgressIndicator
+import com.example.mentalhealth.presentation.auth.viewmodels.SignUpViewModel
 import com.example.mentalhealth.ui.theme.*
 import com.example.mentalhealth.utils.UiState
 
@@ -265,7 +266,6 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
                 onItemSelected = { selectedItem ->
                     viewModel.gender.value = selectedItem
                     viewModel.genderShowError.value = true
-                    println("gender " + viewModel.gender.value)
                 },
                 isError = viewModel.genderShowError.value && !Validator.validateGender(viewModel.gender.value)
             )
@@ -391,7 +391,6 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                 onItemSelected = { selectedItem ->
                     viewModel.maritalStatus.value = selectedItem
                     viewModel.maritalStatusShowError.value = true
-                    println("maritalStatus " + viewModel.maritalStatus.value)
                 },
                 isError = viewModel.maritalStatusShowError.value && !Validator.validateMaritalStatus(viewModel.maritalStatus.value)
             )
@@ -405,7 +404,6 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                 onItemSelected = { selectedItem ->
                     viewModel.livingArea.value = selectedItem
                     viewModel.livingAreaShowError.value = true
-                    println("livingArea " + viewModel.livingArea.value)
                 },
                 isError = viewModel.livingAreaShowError.value && !Validator.validateLivingArea(viewModel.livingArea.value)
             )
@@ -419,7 +417,6 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                 onItemSelected = { selectedItem ->
                     viewModel.publicFigure.value = selectedItem
                     viewModel.publicFigureShowError.value = true
-                    println("publicFigure " + viewModel.publicFigure.value)
                 },
                 isError = viewModel.publicFigureShowError.value && !Validator.validatePublicFigure(viewModel.publicFigure.value)
             )
@@ -437,7 +434,11 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
 
                         Toast.makeText(appContext, accountCreatedSuccessfully, Toast.LENGTH_SHORT).show()
 
-                        navController.popBackStack(Screen.LogInScreen.route,false)
+                        navController.navigate("journal") {
+                            popUpTo("auth") {
+                                inclusive = true
+                            }
+                        }
                     }
                     else {
                         Toast.makeText(appContext, pleaseFillInTheFiledsText, Toast.LENGTH_SHORT).show()

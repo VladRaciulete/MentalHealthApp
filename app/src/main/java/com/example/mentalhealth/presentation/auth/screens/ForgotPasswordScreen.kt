@@ -1,4 +1,4 @@
-package com.example.mentalhealth.presentation
+package com.example.mentalhealth.presentation.auth.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

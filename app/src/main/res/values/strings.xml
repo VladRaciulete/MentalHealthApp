@@ -23,4 +23,8 @@
     <string name="step">Step</string>
     <string name="please_fill_in_the_fields">Please fill in the fields!</string>
     <string name="account_created_successfully">Account created successfully!</string>
+    <string name="invalid_email_or_password">Invalid email or password!</string>
+    <string name="account">Account</string>
+    <string name="notifications">Notifications</string>
+    <string name="log_out">Log out</string>
 </resources>

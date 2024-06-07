@@ -24,4 +24,8 @@
     <string name="step">Pas</string>
     <string name="please_fill_in_the_fields">Va rugam introduceti datele!</string>
     <string name="account_created_successfully">Cont creat cu succes!</string>
+    <string name="invalid_email_or_password">Email sau parola gresite!</string>
+    <string name="account">Cont de utilizator</string>
+    <string name="notifications">Notificari</string>
+    <string name="log_out">Deconecteaza-te</string>
 </resources>

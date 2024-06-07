@@ -11,12 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.mentalhealth.bottomMenu.BottomMenu
-import com.example.mentalhealth.bottomMenu.BottomMenuItem
-import com.example.mentalhealth.R
 import com.example.mentalhealth.di.AppModule
-import com.example.mentalhealth.navigation.Screen
+import com.example.mentalhealth.presentation.bottomMenu.BottomMenu
 import com.example.mentalhealth.ui.theme.*
+import com.example.mentalhealth.utils.Constants
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -46,12 +44,7 @@ fun HomeScreen(navController: NavController) {
         }
         BottomMenu(
             navController = navController,
-            items = listOf(
-                BottomMenuItem("Home", R.drawable.ic_home, Screen.HomeScreen.route),
-                BottomMenuItem("Statistics", R.drawable.ic_stats, Screen.StatisticsScreen.route),
-                BottomMenuItem("Recommendations", R.drawable.ic_recommended, Screen.RecommendationsScreen.route),
-                BottomMenuItem("Account", R.drawable.ic_account, Screen.AccountScreen.route)
-            ),
+            items = Constants.bottomMenuElementList,
             initialSelectedItemIndex = 0,
             modifier = Modifier.align(Alignment.BottomCenter)
         )

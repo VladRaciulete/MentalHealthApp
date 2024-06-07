@@ -17,7 +17,7 @@ interface AuthenticationRepository {
         publicFigure: String
     ) : Result<Unit>
 
-    fun firebaseLogIn(emailAddress: String, password: String) : Result<Unit>
+    suspend fun firebaseLogIn(emailAddress: String, password: String) : Result<Unit>
 
-    fun firebaseLogOut()
+    suspend fun firebaseLogOut() : Result<Unit>
 }
