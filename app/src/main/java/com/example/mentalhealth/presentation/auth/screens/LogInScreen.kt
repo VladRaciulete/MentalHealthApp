@@ -41,11 +41,9 @@ import androidx.navigation.NavController
 import com.example.mentalhealth.R
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.navigation.Screen
-import com.example.mentalhealth.presentation.CustomProgressIndicator
 import com.example.mentalhealth.presentation.auth.viewmodels.LogInViewModel
 import com.example.mentalhealth.ui.theme.*
 import com.example.mentalhealth.utils.AuthState
-import com.example.mentalhealth.utils.UiState
 
 @Composable
 fun LogInScreen(
@@ -199,20 +197,5 @@ fun LogInScreen(
         }
     } else {
         //Toast.makeText(appContext, invalidEmailOrPasswordText, Toast.LENGTH_SHORT).show()
-    }
-
-    when (viewModel.appStateViewModel.uiState.value) {
-        is UiState.Idle -> {
-        }
-
-        is UiState.Loading -> {
-            CustomProgressIndicator()
-        }
-
-        is UiState.Success -> {
-        }
-
-        is UiState.Error -> {
-        }
     }
 }

@@ -45,10 +45,8 @@ fun BottomMenu(
     ) {
         items.forEachIndexed { index, item ->
             BottomMenuItem(
-                navController = navController,
                 item = item,
                 isSelected = index == selectedItemIndex,
-                route = item.route
             ) {
                 selectedItemIndex = index
                 navController.navigate(item.route)
@@ -59,10 +57,8 @@ fun BottomMenu(
 
 @Composable
 fun BottomMenuItem(
-    navController: NavController,
     item: BottomMenuItem,
     isSelected: Boolean = false,
-    route: String,//TODO
     onItemClick: () -> Unit
 ) {
     Column(

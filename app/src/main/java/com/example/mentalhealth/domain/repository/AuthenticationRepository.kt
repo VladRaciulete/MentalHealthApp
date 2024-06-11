@@ -1,23 +1,13 @@
 package com.example.mentalhealth.domain.repository
 
+import com.example.mentalhealth.domain.model.User
+
 interface AuthenticationRepository {
-    fun isUserAuthenticatedInFirebase() : Boolean
+    fun isUserAuthenticatedInFirebase(): Boolean
 
-    suspend fun firebaseSignUp(
-        firstName: String,
-        lastName: String,
-        emailAddress: String,
-        password: String,
-        birthDate: String,
-        gender: String,
-        profession: String,
-        occupation: String,
-        maritalStatus: String,
-        livingArea: String,
-        publicFigure: String
-    ) : Result<Unit>
+    suspend fun firebaseSignUp(emailAddress: String, password: String, user: User): Result<Unit>
 
-    suspend fun firebaseLogIn(emailAddress: String, password: String) : Result<Unit>
+    suspend fun firebaseLogIn(emailAddress: String, password: String): Result<Unit>
 
-    suspend fun firebaseLogOut() : Result<Unit>
+    suspend fun firebaseLogOut(): Result<Unit>
 }

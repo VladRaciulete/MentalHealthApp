@@ -37,10 +37,9 @@ import com.example.mentalhealth.presentation.CustomDropDownMenu
 import com.example.mentalhealth.R
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.navigation.Screen
-import com.example.mentalhealth.presentation.CustomProgressIndicator
 import com.example.mentalhealth.presentation.auth.viewmodels.SignUpViewModel
 import com.example.mentalhealth.ui.theme.*
-import com.example.mentalhealth.utils.UiState
+import com.example.mentalhealth.utils.Constants
 
 @Composable
 fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) {
@@ -57,7 +56,8 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                 .fillMaxSize()
                 .background(BackgroundColor)
         ) {
-            Text(text = stringResource(id = R.string.create_an_account),
+            Text(
+                text = stringResource(id = R.string.create_an_account),
                 style = MaterialTheme.typography.headlineMedium,
             )
 
@@ -70,11 +70,14 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                     viewModel.firstNameShowError.value = true
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.first_name), color = UnfocusedTextWhiteColor)
+                    Text(
+                        text = stringResource(id = R.string.first_name),
+                        color = UnfocusedTextWhiteColor
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor  = TextFieldBackgroundColor,
-                    unfocusedContainerColor  = Color.Transparent,
+                    focusedContainerColor = TextFieldBackgroundColor,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedTextColor = TextWhiteColor,
                     unfocusedTextColor = UnfocusedTextWhiteColor,
                     errorTextColor = ErrorTextColor
@@ -84,7 +87,9 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                 ),
                 singleLine = true,
                 maxLines = 1,
-                isError = viewModel.firstNameShowError.value && !Validator.validateFirstName(viewModel.firstName.value)
+                isError = viewModel.firstNameShowError.value && !Validator.validateFirstName(
+                    viewModel.firstName.value
+                )
             )
 
             Spacer(modifier = Modifier.height(15.dp))
@@ -96,11 +101,14 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                     viewModel.lastNameShowError.value = true
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.last_name), color = UnfocusedTextWhiteColor)
+                    Text(
+                        text = stringResource(id = R.string.last_name),
+                        color = UnfocusedTextWhiteColor
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor  = TextFieldBackgroundColor,
-                    unfocusedContainerColor  = Color.Transparent,
+                    focusedContainerColor = TextFieldBackgroundColor,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedTextColor = TextWhiteColor,
                     unfocusedTextColor = UnfocusedTextWhiteColor,
                     errorTextColor = ErrorTextColor
@@ -122,11 +130,14 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                     viewModel.emailAddressShowError.value = true
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.email_address), color = UnfocusedTextWhiteColor)
+                    Text(
+                        text = stringResource(id = R.string.email_address),
+                        color = UnfocusedTextWhiteColor
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor  = TextFieldBackgroundColor,
-                    unfocusedContainerColor  = Color.Transparent,
+                    focusedContainerColor = TextFieldBackgroundColor,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedTextColor = TextWhiteColor,
                     unfocusedTextColor = UnfocusedTextWhiteColor,
                     errorTextColor = ErrorTextColor
@@ -137,7 +148,9 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                 ),
                 singleLine = true,
                 maxLines = 1,
-                isError = viewModel.emailAddressShowError.value && !Validator.validateEmailAddress(viewModel.emailAddress.value)
+                isError = viewModel.emailAddressShowError.value && !Validator.validateEmailAddress(
+                    viewModel.emailAddress.value
+                )
             )
 
             Spacer(modifier = Modifier.height(15.dp))
@@ -149,11 +162,14 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                     viewModel.passwordShowError.value = true
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.password), color = UnfocusedTextWhiteColor)
+                    Text(
+                        text = stringResource(id = R.string.password),
+                        color = UnfocusedTextWhiteColor
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor  = TextFieldBackgroundColor,
-                    unfocusedContainerColor  = Color.Transparent,
+                    focusedContainerColor = TextFieldBackgroundColor,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedTextColor = TextWhiteColor,
                     unfocusedTextColor = UnfocusedTextWhiteColor,
                     errorTextColor = ErrorTextColor
@@ -169,20 +185,19 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
                             viewModel.passwordVisible.value = !viewModel.passwordVisible.value
                         }
                     ) {
-                        if(viewModel.passwordVisible.value) {
-                            Icon(Icons.Filled.Visibility,contentDescription = "Hide Password")
-                        }
-                        else {
-                            Icon(Icons.Filled.VisibilityOff,contentDescription = "Show Password")
+                        if (viewModel.passwordVisible.value) {
+                            Icon(Icons.Filled.Visibility, contentDescription = "Hide Password")
+                        } else {
+                            Icon(Icons.Filled.VisibilityOff, contentDescription = "Show Password")
                         }
                     }
                 },
-                visualTransformation = if(viewModel.passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+                visualTransformation = if (viewModel.passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
                 isError = viewModel.passwordShowError.value && !Validator.validatePassword(viewModel.password.value)
             )
         }
 
-        var signUpCurrentStep = viewModel.currentStep.value
+        val signUpCurrentStep = viewModel.currentStep.value
 
         Text(
             text = stringResource(id = R.string.step) + " $signUpCurrentStep / 3",
@@ -194,13 +209,7 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
 
         Button(
             onClick = {
-                viewModel.currentStep.value--
-                if (navController.popBackStack()) {
-                }
-                else {
-                    navController.navigate(Screen.LogInScreen.route)
-                }
-
+                navController.popBackStack()
             },
             modifier = Modifier
                 .align(Alignment.BottomStart)
@@ -209,16 +218,15 @@ fun SignUpScreenStep1(navController: NavController, viewModel: SignUpViewModel) 
             Text(text = stringResource(id = R.string.back), color = TextWhiteColor)
         }
 
-        var pleaseFillInTheFiledsText = stringResource(id = R.string.please_fill_in_the_fields)
+        val pleaseFillInTheFieldsText = stringResource(id = R.string.please_fill_in_the_fields)
 
         Button(
             onClick = {
-                if (viewModel.validateFieldsScreen1()){
+                if (viewModel.validateFieldsScreen1()) {
                     viewModel.currentStep.value++
                     navController.navigate(Screen.SignUpScreenStep2.route)
-                }
-                else {
-                    Toast.makeText(appContext, pleaseFillInTheFiledsText, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(appContext, pleaseFillInTheFieldsText, Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -245,22 +253,21 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
                 .fillMaxSize()
                 .background(BackgroundColor)
         ) {
-            Text(text = stringResource(id = R.string.create_an_account),
+            Text(
+                text = stringResource(id = R.string.create_an_account),
                 style = MaterialTheme.typography.headlineMedium,
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            //viewModel.birthDateShowError.value = true
-            //viewModel.birthDateShowError.value && !Validator.validateDate(viewModel.birthDate.value)
-            CustomDatePicker(viewModel.birthDate) {
-                    newDate -> viewModel.birthDate.value = newDate
+            CustomDatePicker(viewModel.birthDate) { newDate ->
+                viewModel.birthDate.value = newDate
             }
 
             Spacer(modifier = Modifier.height(15.dp))
 
             CustomDropDownMenu(
-                itemList = viewModel.genderList,
+                itemList = Constants.genderList,
                 placeholder = stringResource(id = R.string.gender),
                 selectedItem = viewModel.gender,
                 onItemSelected = { selectedItem ->
@@ -279,11 +286,14 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
                     viewModel.professionShowError.value = true
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.profession), color = UnfocusedTextWhiteColor)
+                    Text(
+                        text = stringResource(id = R.string.profession),
+                        color = UnfocusedTextWhiteColor
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor  = TextFieldBackgroundColor,
-                    unfocusedContainerColor  = Color.Transparent,
+                    focusedContainerColor = TextFieldBackgroundColor,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedTextColor = TextWhiteColor,
                     unfocusedTextColor = UnfocusedTextWhiteColor,
                     errorTextColor = ErrorTextColor
@@ -293,7 +303,9 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
                 ),
                 singleLine = true,
                 maxLines = 1,
-                isError = viewModel.professionShowError.value && !Validator.validateProfession(viewModel.profession.value)
+                isError = viewModel.professionShowError.value && !Validator.validateProfession(
+                    viewModel.profession.value
+                )
             )
 
             Spacer(modifier = Modifier.height(15.dp))
@@ -305,22 +317,27 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
                     viewModel.occupationShowError.value = true
                 },
                 label = {
-                    Text(text = stringResource(id = R.string.occupation), color = UnfocusedTextWhiteColor)
+                    Text(
+                        text = stringResource(id = R.string.occupation),
+                        color = UnfocusedTextWhiteColor
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor  = TextFieldBackgroundColor,
-                    unfocusedContainerColor  = Color.Transparent,
+                    focusedContainerColor = TextFieldBackgroundColor,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedTextColor = TextWhiteColor,
                     unfocusedTextColor = UnfocusedTextWhiteColor,
                     errorTextColor = ErrorTextColor
                 ),
                 singleLine = true,
                 maxLines = 1,
-                isError = viewModel.occupationShowError.value && !Validator.validateOccupation(viewModel.occupation.value)
+                isError = viewModel.occupationShowError.value && !Validator.validateOccupation(
+                    viewModel.occupation.value
+                )
             )
         }
 
-        var signUpCurrentStep = viewModel.currentStep.value
+        val signUpCurrentStep = viewModel.currentStep.value
 
         Text(
             text = stringResource(id = R.string.step) + " $signUpCurrentStep / 3",
@@ -342,16 +359,15 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
             Text(text = stringResource(id = R.string.back), color = TextWhiteColor)
         }
 
-        var pleaseFillInTheFiledsText = stringResource(id = R.string.please_fill_in_the_fields)
+        val pleaseFillInTheFieldsText = stringResource(id = R.string.please_fill_in_the_fields)
 
         Button(
             onClick = {
-                if (viewModel.validateFieldsScreen2()){
+                if (viewModel.validateFieldsScreen2()) {
                     viewModel.currentStep.value++
                     navController.navigate(Screen.SignUpScreenStep3.route)
-                }
-                else {
-                    Toast.makeText(appContext, pleaseFillInTheFiledsText, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(appContext, pleaseFillInTheFieldsText, Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -378,70 +394,79 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                 .fillMaxSize()
                 .background(BackgroundColor)
         ) {
-            Text(text = stringResource(id = R.string.create_an_account),
+            Text(
+                text = stringResource(id = R.string.create_an_account),
                 style = MaterialTheme.typography.headlineMedium,
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             CustomDropDownMenu(
-                itemList = viewModel.maritalStatusList,
+                itemList = Constants.maritalStatusList,
                 placeholder = stringResource(id = R.string.marital_status),
                 selectedItem = viewModel.maritalStatus,
                 onItemSelected = { selectedItem ->
                     viewModel.maritalStatus.value = selectedItem
                     viewModel.maritalStatusShowError.value = true
                 },
-                isError = viewModel.maritalStatusShowError.value && !Validator.validateMaritalStatus(viewModel.maritalStatus.value)
+                isError = viewModel.maritalStatusShowError.value && !Validator.validateMaritalStatus(
+                    viewModel.maritalStatus.value
+                )
             )
 
             Spacer(modifier = Modifier.height(15.dp))
 
             CustomDropDownMenu(
-                itemList = viewModel.livingAreaList,
+                itemList = Constants.livingAreaList,
                 placeholder = stringResource(id = R.string.living_area),
                 selectedItem = viewModel.livingArea,
                 onItemSelected = { selectedItem ->
                     viewModel.livingArea.value = selectedItem
                     viewModel.livingAreaShowError.value = true
                 },
-                isError = viewModel.livingAreaShowError.value && !Validator.validateLivingArea(viewModel.livingArea.value)
+                isError = viewModel.livingAreaShowError.value && !Validator.validateLivingArea(
+                    viewModel.livingArea.value
+                )
             )
 
             Spacer(modifier = Modifier.height(15.dp))
 
             CustomDropDownMenu(
-                itemList = viewModel.publicFigureList,
+                itemList = Constants.publicFigureList,
                 placeholder = stringResource(id = R.string.public_figure),
                 selectedItem = viewModel.publicFigure,
                 onItemSelected = { selectedItem ->
                     viewModel.publicFigure.value = selectedItem
                     viewModel.publicFigureShowError.value = true
                 },
-                isError = viewModel.publicFigureShowError.value && !Validator.validatePublicFigure(viewModel.publicFigure.value)
+                isError = viewModel.publicFigureShowError.value && !Validator.validatePublicFigure(
+                    viewModel.publicFigure.value
+                )
             )
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            var pleaseFillInTheFiledsText = stringResource(id = R.string.please_fill_in_the_fields)
+            val pleaseFillInTheFieldsText = stringResource(id = R.string.please_fill_in_the_fields)
 
-            var accountCreatedSuccessfully = stringResource(id = R.string.account_created_successfully)
+            val accountCreatedSuccessfully =
+                stringResource(id = R.string.account_created_successfully)
 
             Button(
                 onClick = {
-                    if (viewModel.validateFieldsScreen3()){
+                    if (viewModel.validateFieldsScreen3()) {
                         viewModel.signUp()
 
-                        Toast.makeText(appContext, accountCreatedSuccessfully, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(appContext, accountCreatedSuccessfully, Toast.LENGTH_SHORT)
+                            .show()
 
                         navController.navigate("journal") {
                             popUpTo("auth") {
                                 inclusive = true
                             }
                         }
-                    }
-                    else {
-                        Toast.makeText(appContext, pleaseFillInTheFiledsText, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(appContext, pleaseFillInTheFieldsText, Toast.LENGTH_SHORT)
+                            .show()
                     }
                 },
             ) {
@@ -449,7 +474,7 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
             }
         }
 
-        var signUpCurrentStep = viewModel.currentStep.value
+        val signUpCurrentStep = viewModel.currentStep.value
 
         Text(
             text = stringResource(id = R.string.step) + " $signUpCurrentStep / 3",
@@ -469,17 +494,6 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                 .padding(bottom = 25.dp, start = 15.dp)
         ) {
             Text(text = stringResource(id = R.string.back), color = TextWhiteColor)
-        }
-    }
-    when(viewModel.appStateViewModel.uiState.value){
-        is UiState.Idle -> {
-        }
-        is UiState.Loading -> {
-            CustomProgressIndicator()
-        }
-        is UiState.Success -> {
-        }
-        is UiState.Error -> {
         }
     }
 }

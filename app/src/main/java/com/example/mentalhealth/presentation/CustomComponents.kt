@@ -50,7 +50,12 @@ import androidx.compose.ui.unit.sp
 import com.example.mentalhealth.R
 import com.example.mentalhealth.domain.model.Goal
 import com.example.mentalhealth.utils.Constants
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -238,7 +243,7 @@ fun JournalDatePicker(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = date,
+                text = formatDate(date),
                 color = TextWhiteColor,
                 modifier = Modifier
                     .clickable {
@@ -249,14 +254,32 @@ fun JournalDatePicker(
     }
 }
 
+fun formatDate(dateString: String): String {
+    val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+
+    val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
+    val todayFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+
+    val date: Date = try {
+        inputFormat.parse(dateString) ?: return "Invalid date"
+    } catch (e: Exception) {
+        return "Invalid date"
+    }
+
+    if(dateString == todayDate){
+        return "Today, ${todayFormat.format(date)}"
+    }
+
+    return outputFormat.format(date)
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTimePicker(
     state: MutableState<String>
 ) {
-    val calendar = android.icu.util.Calendar.getInstance()
     var timeString = ""
-
     var isExpanded by remember { mutableStateOf(false) }
 
     val timePickerDialog = TimePickerDialog(

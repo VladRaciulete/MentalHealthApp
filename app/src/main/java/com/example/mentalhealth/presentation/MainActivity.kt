@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mentalhealth.presentation.navigation.Navigation
+import com.example.mentalhealth.ui.theme.BackgroundColor
 import com.example.mentalhealth.ui.theme.MentalHealthTheme
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
@@ -20,7 +25,13 @@ class MainActivity : ComponentActivity() {
             MentalHealthTheme {
                 val appContext = LocalContext.current
                 val appStateViewModel: AppStateViewModel = hiltViewModel()
-                Navigation()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(BackgroundColor)
+                ){
+                    Navigation()
+                }
                 when (appStateViewModel.uiState.value) {
                     is UiState.Idle -> {
                     }

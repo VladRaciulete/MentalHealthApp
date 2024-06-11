@@ -65,7 +65,9 @@ fun JournalScreen(
                         }
                 )
 
-                JournalDatePicker(formatDate(viewModel.date.value)) { newDate ->
+                JournalDatePicker(
+                    viewModel.date.value
+                ) { newDate ->
                     viewModel.date.value = newDate
                 }
 
@@ -145,11 +147,4 @@ fun JournalScreen(
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
-}
-
-fun formatDate(inputDate: String): String {
-    val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
-    val date: Date? = inputFormat.parse(inputDate)
-    return date?.let { outputFormat.format(it) } ?: inputDate
 }

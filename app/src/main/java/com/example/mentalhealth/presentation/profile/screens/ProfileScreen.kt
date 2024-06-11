@@ -98,20 +98,6 @@ fun ProfileScreen(
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
-    when (viewModel.appStateViewModel.uiState.value) {
-        is UiState.Idle -> {
-        }
-
-        is UiState.Loading -> {
-            CustomProgressIndicator()
-        }
-
-        is UiState.Success -> {
-        }
-
-        is UiState.Error -> {
-        }
-    }
 }
 
 @Composable

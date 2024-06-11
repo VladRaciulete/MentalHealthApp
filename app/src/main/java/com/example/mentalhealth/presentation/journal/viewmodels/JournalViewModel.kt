@@ -63,7 +63,7 @@ class JournalViewModel @Inject constructor(
         getJournalEntry()
     }
 
-    fun getJournalEntry(){
+    fun getJournalEntry() {
         viewModelScope.launch {
             try {
                 resetViewModelFields()
@@ -94,10 +94,12 @@ class JournalViewModel @Inject constructor(
 
                     appStateViewModel.uiState.value = UiState.Success(SuccessEvent.USER_DATA_LOADED)
                 } else {
-                    appStateViewModel.uiState.value = UiState.Error("Error while retrieving journal entry")
+                    appStateViewModel.uiState.value =
+                        UiState.Error("Error while retrieving journal entry")
                 }
             } catch (e: Exception) {
-                appStateViewModel.uiState.value = UiState.Error(e.message ?: "Error while retrieving journal entry")
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: "Error while retrieving journal entry")
             }
         }
     }
@@ -148,7 +150,7 @@ class JournalViewModel @Inject constructor(
         }
     }
 
-    fun addEveningJournalCheckIn(){
+    fun addEveningJournalCheckIn() {
         viewModelScope.launch {
             try {
                 appStateViewModel.uiState.value = UiState.Loading
@@ -194,7 +196,7 @@ class JournalViewModel @Inject constructor(
         }
     }
 
-    fun resetViewModelFields(){
+    private fun resetViewModelFields() {
         morningCheckIn.value = false
         eveningCheckIn.value = false
         wakeUpTime.value = ""
@@ -223,7 +225,7 @@ class JournalViewModel @Inject constructor(
         whatCanIDoToMakeTomorrowBetter.value = ""
     }
 
-    fun printAllData(){
+    fun printAllData() {
         resetViewModelFields()
         getJournalEntry()
         println("=================================================")
@@ -249,7 +251,6 @@ class JournalViewModel @Inject constructor(
         println("timeStamp : ${timeStamp.value}")
         println("date : ${date.value}")
         println("=================================================")
-
     }
 
     fun formatDate(inputDate: String): Date {

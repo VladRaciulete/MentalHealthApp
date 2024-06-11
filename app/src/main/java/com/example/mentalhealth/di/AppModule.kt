@@ -48,29 +48,25 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAuthenticationRepository(
-        auth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        dataSource: FirestoreDataSource
     ): AuthenticationRepository {
-        return AuthenticationRepositoryImpl(auth, firestore)
+        return AuthenticationRepositoryImpl(dataSource)
     }
 
     @Provides
     @Singleton
     fun provideJournalRepository(
-        auth: FirebaseAuth,
-        firestore: FirebaseFirestore,
         dataSource: FirestoreDataSource
     ): JournalRepository {
-        return JournalRepositoryImpl(auth, firestore, dataSource)
+        return JournalRepositoryImpl(dataSource)
     }
 
     @Provides
     @Singleton
     fun provideProfileRepository(
-        auth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        dataSource: FirestoreDataSource
     ): ProfileRepository {
-        return ProfileRepositoryImpl(auth, firestore)
+        return ProfileRepositoryImpl(dataSource)
     }
 
     @Provides

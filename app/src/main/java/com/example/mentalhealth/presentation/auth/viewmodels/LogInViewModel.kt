@@ -20,11 +20,9 @@ class LogInViewModel @Inject constructor(
     val appStateViewModel: AppStateViewModel,
     val checkUserAuthenticatedUseCase: CheckUserAuthenticatedUseCase
 ) : ViewModel() {
-
     var emailAddress = mutableStateOf("")
     var password = mutableStateOf("")
     var passwordVisible = mutableStateOf(false)
-
     var emailAddressShowError = mutableStateOf(false)
     var passwordShowError = mutableStateOf(false)
 

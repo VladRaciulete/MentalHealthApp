@@ -1,73 +1,31 @@
 package com.example.mentalhealth.data.repository
 
+import com.example.mentalhealth.data.datasource.FirestoreDataSource
+import com.example.mentalhealth.domain.model.User
 import com.example.mentalhealth.domain.repository.AuthenticationRepository
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val dataSource: FirestoreDataSource
 ) : AuthenticationRepository {
 
     override fun isUserAuthenticatedInFirebase(): Boolean {
-        return auth.currentUser != null
+        return dataSource.isUserAuthenticatedInFirebase()
     }
 
     override suspend fun firebaseSignUp(
-        firstName: String,
-        lastName: String,
         emailAddress: String,
         password: String,
-        birthDate: String,
-        gender: String,
-        profession: String,
-        occupation: String,
-        maritalStatus: String,
-        livingArea: String,
-        publicFigure: String
+        user: User
     ): Result<Unit> {
-        return try {
-            val signUpResult = auth.createUserWithEmailAndPassword(emailAddress, password).await()
-            val user = signUpResult.user ?: throw Exception("Sign Up failed!")
-
-            val userId = user.uid
-            val userData = hashMapOf(
-                "firstName" to firstName,
-                "lastName" to lastName,
-                "birthDate" to birthDate,
-                "gender" to gender,
-                "profession" to profession,
-                "occupation" to occupation,
-                "maritalStatus" to maritalStatus,
-                "livingArea" to livingArea,
-                "publicFigure" to publicFigure
-            )
-
-            firestore.collection("users").document(userId).set(userData).await()
-            Result.success(Unit)
-
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+        return dataSource.firebaseSignUp(emailAddress, password, user)
     }
 
     override suspend fun firebaseLogIn(emailAddress: String, password: String): Result<Unit> {
-        return try {
-            auth.signInWithEmailAndPassword(emailAddress, password).await()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+        return dataSource.firebaseLogIn(emailAddress, password)
     }
 
     override suspend fun firebaseLogOut(): Result<Unit> {
-        return try {
-            auth.signOut()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+        return dataSource.firebaseLogOut()
     }
 }
