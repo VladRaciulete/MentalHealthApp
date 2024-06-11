@@ -7,6 +7,7 @@ import com.example.mentalhealth.domain.usecase.auth.SignUpUseCase
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -101,7 +102,12 @@ class SignUpViewModel @Inject constructor(
                 livingArea.value,
                 publicFigure.value
             )
-            appStateViewModel.uiState.value = if (signUpResult.isSuccess) UiState.Success else UiState.Error(signUpResult.exceptionOrNull()?.message ?: "signup error")
+            appStateViewModel.uiState.value =
+                if (signUpResult.isSuccess)
+                    UiState.Success(SuccessEvent.USER_ACCOUNT_CREATED)
+                else
+                    UiState.Error(signUpResult.exceptionOrNull()?.message ?: "Signup Error")
+
             if (signUpResult.isSuccess) {
                 appStateViewModel.authState.value = AuthState.Authenticated
             }

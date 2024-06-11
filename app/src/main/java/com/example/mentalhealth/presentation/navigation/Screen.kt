@@ -1,7 +1,9 @@
 package com.example.mentalhealth.presentation.navigation
 
 sealed class Screen(val route: String) {
-    data object HomeScreen : Screen("home_screen")
+    data object JournalScreen : Screen("journal_screen")
+    data object MorningCheckInScreen : Screen("morning_check_in_screen")
+    data object EveningCheckInScreen : Screen("evening_check_in_screen")
     data object StatisticsScreen : Screen("statistics_screen")
     data object RecommendationsScreen : Screen("recommendations_screen")
     data object ProfileScreen : Screen("profile_screen")

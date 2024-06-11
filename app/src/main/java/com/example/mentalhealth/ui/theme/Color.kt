@@ -29,7 +29,24 @@ val DarkTertiary = Color(0xFF04080F)
 val TextWhiteColor = Color(0xFFE7E7E7)
 val UnfocusedTextWhiteColor = Color(0xFFA7A7A7)
 
+val FocusedTextFieldColor = Color(0xFF07164D)
+
+val UnfocusedTextFieldTextColor = Color(0xFFA6A6A6)
+val FocusedTextFieldTextColor = Color(0xFFE7E7E7)
+
+val FocusedBorderColor = Color(0xFF495D92)
+val UnfocusedBorderColor = Color(0xFF757780)
+
+val FocusedLabelColor = Color(0xFF495D92)
+val UnfocusedLabelColor = Color(0xFF45464F)
+
+val StarSelectedColor = Color(0xFFDAC15E)
+val StarUnselectedColor = Color(0xFF2A439E)
+
+val ItemSelectedColor = Color(0xFF2A439E)
+val ItemUnselectedColor = Color(0xFF0E1F5C)
 val BackgroundColor = Color(0xFF05113C)
+val UncheckedTrackColor = Color(0xFF030B29)
 val AccentColor = Color(0xFF3E47B8)
 val TextFieldBackgroundColor = Color(0xFF07164D)
 

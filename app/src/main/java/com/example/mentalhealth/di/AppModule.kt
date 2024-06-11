@@ -1,13 +1,19 @@
 package com.example.mentalhealth.di
 
+import com.example.mentalhealth.data.datasource.FirestoreDataSource
 import com.example.mentalhealth.data.repository.AuthenticationRepositoryImpl
+import com.example.mentalhealth.data.repository.JournalRepositoryImpl
 import com.example.mentalhealth.data.repository.ProfileRepositoryImpl
 import com.example.mentalhealth.domain.repository.AuthenticationRepository
+import com.example.mentalhealth.domain.repository.JournalRepository
 import com.example.mentalhealth.domain.repository.ProfileRepository
 import com.example.mentalhealth.domain.usecase.auth.CheckUserAuthenticatedUseCase
 import com.example.mentalhealth.domain.usecase.auth.LogInUseCase
 import com.example.mentalhealth.domain.usecase.profile.LogOutUseCase
 import com.example.mentalhealth.domain.usecase.auth.SignUpUseCase
+import com.example.mentalhealth.domain.usecase.journal.AddEveningJournalEntryUseCase
+import com.example.mentalhealth.domain.usecase.journal.AddMorningJournalEntryUseCase
+import com.example.mentalhealth.domain.usecase.journal.GetJournalEntryUseCase
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -32,11 +38,30 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideFirestoreDataSource(
+        auth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): FirestoreDataSource {
+        return FirestoreDataSource(auth, firestore)
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthenticationRepository(
         auth: FirebaseAuth,
         firestore: FirebaseFirestore
     ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(auth, firestore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideJournalRepository(
+        auth: FirebaseAuth,
+        firestore: FirebaseFirestore,
+        dataSource: FirestoreDataSource
+    ): JournalRepository {
+        return JournalRepositoryImpl(auth, firestore, dataSource)
     }
 
     @Provides
@@ -83,5 +108,24 @@ object AppModule {
     fun provideAppStateViewModel(): AppStateViewModel {
         return AppStateViewModel()
     }
+
+    @Provides
+    @Singleton
+    fun provideAddEveningJournalUseCase(journalRepository: JournalRepository): AddEveningJournalEntryUseCase {
+        return AddEveningJournalEntryUseCase(journalRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddMorningJournalUseCase(journalRepository: JournalRepository): AddMorningJournalEntryUseCase {
+        return AddMorningJournalEntryUseCase(journalRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetJournalEntryUseCase(journalRepository: JournalRepository): GetJournalEntryUseCase {
+        return GetJournalEntryUseCase(journalRepository)
+    }
+
 
 }

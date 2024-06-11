@@ -18,6 +18,10 @@ import com.example.mentalhealth.presentation.auth.screens.SignUpScreenStep2
 import com.example.mentalhealth.presentation.auth.screens.SignUpScreenStep3
 import com.example.mentalhealth.presentation.auth.viewmodels.LogInViewModel
 import com.example.mentalhealth.presentation.auth.viewmodels.SignUpViewModel
+import com.example.mentalhealth.presentation.journal.screens.EveningCheckInScreen
+import com.example.mentalhealth.presentation.journal.screens.JournalScreen
+import com.example.mentalhealth.presentation.journal.screens.MorningCheckInScreen
+import com.example.mentalhealth.presentation.journal.viewmodels.JournalViewModel
 import com.example.mentalhealth.presentation.profile.screens.AccountSettingsScreen
 import com.example.mentalhealth.presentation.profile.screens.NotificationsSettingsScreen
 import com.example.mentalhealth.presentation.profile.screens.ProfileScreen
@@ -28,6 +32,7 @@ fun Navigation() {
     val signUpViewModel: SignUpViewModel = hiltViewModel()
     val logInViewModel: LogInViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
+    val journalViewModel: JournalViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -61,11 +66,19 @@ fun Navigation() {
         }
 
         navigation(
-            startDestination = Screen.HomeScreen.route,
+            startDestination = Screen.JournalScreen.route,
             route = "journal",
         ) {
-            composable(route = Screen.HomeScreen.route) {
-                HomeScreen(navController = navController)
+            composable(route = Screen.JournalScreen.route) {
+                JournalScreen(navController = navController, viewModel = journalViewModel)
+            }
+
+            composable(route = Screen.MorningCheckInScreen.route) {
+                MorningCheckInScreen(navController = navController, viewModel = journalViewModel)
+            }
+
+            composable(route = Screen.EveningCheckInScreen.route) {
+                EveningCheckInScreen(navController = navController, viewModel = journalViewModel)
             }
 
             composable(route = Screen.StatisticsScreen.route) {

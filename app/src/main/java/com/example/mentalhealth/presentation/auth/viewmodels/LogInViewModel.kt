@@ -8,6 +8,7 @@ import com.example.mentalhealth.domain.usecase.auth.LogInUseCase
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -40,7 +41,7 @@ class LogInViewModel @Inject constructor(
                 val logInResult = logInUseCase(emailAddress.value, password.value)
                 appStateViewModel.uiState.value =
                     if (logInResult.isSuccess)
-                        UiState.Success
+                        UiState.Success(SuccessEvent.SUCCESS)
                     else
                         UiState.Error(logInResult.exceptionOrNull()?.message ?: "login error")
 
