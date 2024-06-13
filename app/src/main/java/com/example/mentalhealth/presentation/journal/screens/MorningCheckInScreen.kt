@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -21,6 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -70,7 +74,7 @@ fun MorningCheckInScreen(
                     .fillMaxWidth(0.8f)
             ) {
                 Text(
-                    text = "Morning check in",
+                    text = stringResource(id = R.string.morning_journal),
                     color = TextWhiteColor,
                     fontSize = 20.sp
                 )
@@ -94,7 +98,9 @@ fun MorningCheckInScreen(
                     onValueChange = { newValue ->
                         viewModel.hoursSlept.value = newValue
                     },
-                    label = { Text(text = "hoursSlept") },
+                    label = {
+                        Text(text = stringResource(id = R.string.how_many_hours_did_you_sleep))
+                    },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = TextFieldBackgroundColor,
                         unfocusedContainerColor = Color.Transparent,
@@ -102,18 +108,18 @@ fun MorningCheckInScreen(
                         unfocusedTextColor = UnfocusedTextWhiteColor,
                         errorTextColor = ErrorTextColor
                     ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
+                    ),
                     singleLine = true
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
-                viewModel.dailyGoals.value.forEachIndexed { index, item ->
-                    println("Goal($index) => ${item.description}")
-                }
 
                 CustomSpacerBorder(15, 15, FocusedBorderColor)
 
                 AddGoals(
-                    text = "Add your daily goals",
+                    text = stringResource(id = R.string.add_your_daily_goals),
                     state = viewModel.dailyGoals
                 )
 
@@ -127,7 +133,7 @@ fun MorningCheckInScreen(
                         navController.popBackStack()
                     }
                 ) {
-                    Text(text = "Check In")
+                    Text(text = stringResource(id = R.string.done))
                 }
 
                 Spacer(modifier = Modifier.height(100.dp))

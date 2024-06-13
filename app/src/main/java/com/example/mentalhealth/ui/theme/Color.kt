@@ -46,6 +46,10 @@ val StarUnselectedColor = Color(0xFF2A439E)
 val ItemSelectedColor = Color(0xFF2A439E)
 val ItemUnselectedColor = Color(0xFF0E1F5C)
 val BackgroundColor = Color(0xFF05113C)
+
+val JournalEntryBackgroundColor1 = Color(0xFF0B1E63)
+val JournalEntryBackgroundColor2 = Color(0xFF05113C)
+
 val UncheckedTrackColor = Color(0xFF030B29)
 val AccentColor = Color(0xFF3E47B8)
 val TextFieldBackgroundColor = Color(0xFF07164D)

@@ -44,24 +44,28 @@ object Constants {
 
     val progressValues = listOf(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
-    val todayPositiveFeelings = listOf(
-        "calm", "fine", "content", "excited", "grateful", "happy",
-        "hopeful", "joyful", "loved", "motivated", "powerful",
-        "productive", "proud", "relaxed", "satisfied", "valued",
-    )
-
-    val todayNegativeFeelings = listOf(
-        "angry", "annoyed", "frustrated", "bored",
-        "depressed", "anxious", "insecure",
-        "lazy", "lonely", "sad", "tired", "sick"
+    val todayFeelings = listOf(
+        "Ecstatic", "Excited", "Happy", "Joyful", "Content", "Grateful", "Hopeful",
+        "Proud", "Relaxed", "Calm", "Fine", "Satisfied", "Valued", "Productive",
+        "Motivated", "Loved", "Tired", "Lazy", "Bored", "Annoyed", "Frustrated", "Anxious",
+        "Insecure", "Sad", "Sick", "Lonely", "Depressed", "Angry", "Stressed"
     )
 
     val careOfMyself = listOf(
-        "walk", "bath", "pets", "cook", "yoga", "read",
-        "journaling", "extra sleep", "met family",
-        "met friends", "played games", "exercise", "workout",
-        "tv/movie", "meditate", "running", "food", "music",
+        "Walked", "Cooked", "Did Yoga", "Read", "Meditated", "Exercised", "Journaled",
+        "Listened to music", "Watched a movie", "Spent time with family", "Spent time with friends",
+        "Took a bath", "Practiced a hobby", "Gardened", "Danced", "Drew", "Painted", "Knitted", "Baked",
+        "Played an instrument", "Cleaned", "Organized", "Studied", "Learned a new skill",
+        "Took a nap", "Did a skincare routine", "Went for a run", "Rode a bike", "Played sports",
+        "Did a puzzle", "Played a game", "Went to the spa", "Did crafts", "Practiced mindfulness",
+        "Practiced gratitude", "Did stretching exercises", "Tried a new recipe",
+        "Did breathing exercises", "Had a digital detox", "Volunteered", "Spent time in nature",
+        "Practiced positive affirmations", "Planned a trip", "Watched a documentary","Visited a park",
+        "Visited a museum", "Had a cup of tea/coffee",
+        "Attended a cultural event", "Explored a new place", "Went to the beach",
+        "Had a healthy meal", "Hydrated well", "Spent time with pets", "Reflected on goals",
+        "Did light physical activity", "Watched a comedy show", "Explored spirituality"
     )
 
-    val dayFeeling = listOf("very bad", "bad", "decent", "good", "very good")
+    val dayFeeling = listOf("Very bad", "Bad", "decent", "Good", "Very good")
 }

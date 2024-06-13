@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -29,7 +30,6 @@ import com.example.mentalhealth.presentation.AddGoalsProgress
 import com.example.mentalhealth.presentation.CustomLevelPicker
 import com.example.mentalhealth.presentation.CustomSpacerBorder
 import com.example.mentalhealth.presentation.CustomToggle
-import com.example.mentalhealth.presentation.FeelingPicker
 import com.example.mentalhealth.presentation.FeelingsPicker
 import com.example.mentalhealth.presentation.RatingStars
 import com.example.mentalhealth.presentation.journal.viewmodels.JournalViewModel
@@ -75,7 +75,7 @@ fun EveningCheckInScreen(
                     .fillMaxWidth(0.8f)
             ) {
                 Text(
-                    text = "Evening check in",
+                    text = stringResource(id = R.string.evening_journal),
                     color = TextWhiteColor,
                     fontSize = 20.sp
                 )
@@ -90,53 +90,52 @@ fun EveningCheckInScreen(
             item {
                 Spacer(modifier = Modifier.height(40.dp))
 
-                RatingStars("Day Rating", viewModel.dayRating)
+                RatingStars(stringResource(id = R.string.day_rating), viewModel.dayRating)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                AddGoalsProgress("Add goals progress",viewModel.dailyGoals)
+                AddGoalsProgress(stringResource(id = R.string.add_goals_progress),viewModel.dailyGoals)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
                 FeelingsPicker(
-                    text = "todayIFelt",
-                    Constants.todayPositiveFeelings,
-                    Constants.todayNegativeFeelings,
+                    text = stringResource(id = R.string.how_did_you_feel_today),
+                    Constants.todayFeelings,
                     state = viewModel.todayIFelt
                 )
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                CustomLevelPicker("Stress Level", viewModel.stressLevel)
+                CustomLevelPicker(stringResource(id = R.string.stress_level), viewModel.stressLevel)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                CustomLevelPicker("Water Intake", viewModel.waterIntake)
+                CustomLevelPicker(stringResource(id = R.string.water_intake), viewModel.waterIntake)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                CustomLevelPicker("Energy Level", viewModel.energyLevel)
+                CustomLevelPicker(stringResource(id = R.string.energy_level), viewModel.energyLevel)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                CustomLevelPicker("Love Level", viewModel.loveLevel)
+                CustomLevelPicker(stringResource(id = R.string.love_level), viewModel.loveLevel)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                FeelingPicker(
-                    text = "dayFeeling",
+                FeelingsPicker(
+                    text = stringResource(id = R.string.how_was_today),
                     Constants.dayFeeling,
                     state = viewModel.dayFeeling
                 )
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                CustomToggle(text = "DID I HAVE ENOUGH",state = viewModel.didIHaveEnough)
+                CustomToggle(text = stringResource(id = R.string.did_you_have_enough),state = viewModel.didIHaveEnough)
 
                 CustomSpacerBorder(15,15, FocusedBorderColor)
 
-                FeelingPicker(
-                    text = "whatDidIDoToTakeCareOfMyself",
+                FeelingsPicker(
+                    text = stringResource(id = R.string.how_did_you_take_care_of_yourself),
                     Constants.careOfMyself,
                     state = viewModel.whatDidIDoToTakeCareOfMyself
                 )
@@ -148,7 +147,7 @@ fun EveningCheckInScreen(
                     onValueChange = { newValue ->
                         viewModel.todayIAmGratefulFor.value = newValue
                     },
-                    label = { Text(text = "todayIAmGratefulFor") },
+                    label = { Text(text = stringResource(id = R.string.what_are_you_grateful_for)) },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = TextFieldBackgroundColor,
                         unfocusedContainerColor = Color.Transparent,
@@ -165,7 +164,7 @@ fun EveningCheckInScreen(
                         viewModel.whatWentWell.value = newValue
                     },
                     label = {
-                        Text(text = "whatWentWell")
+                        Text(text = stringResource(id = R.string.what_went_well_today))
                     },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = TextFieldBackgroundColor,
@@ -185,7 +184,7 @@ fun EveningCheckInScreen(
                         viewModel.whatWentBad.value = newValue
                     },
                     label = {
-                        Text(text = "whatWentBad")
+                        Text(text = stringResource(id = R.string.what_went_bad_today))
                     },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = TextFieldBackgroundColor,
@@ -205,7 +204,7 @@ fun EveningCheckInScreen(
                         viewModel.bestMomentOfTheDay.value = newValue
                     },
                     label = {
-                        Text(text = "bestMomentOfTheDay")
+                        Text(text = stringResource(id = R.string.best_moment_of_the_day))
                     },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = TextFieldBackgroundColor,
@@ -225,7 +224,7 @@ fun EveningCheckInScreen(
                         viewModel.whatCanIDoToMakeTomorrowBetter.value = newValue
                     },
                     label = {
-                        Text(text = "whatCanIDoToMakeTomorrowBetter")
+                        Text(text = stringResource(id = R.string.how_can_you_make_tomorrow_better))
                     },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = TextFieldBackgroundColor,
@@ -247,7 +246,7 @@ fun EveningCheckInScreen(
                         navController.popBackStack()
                     }
                 ) {
-                    Text(text = "Check In")
+                    Text(text = stringResource(id = R.string.done))
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))

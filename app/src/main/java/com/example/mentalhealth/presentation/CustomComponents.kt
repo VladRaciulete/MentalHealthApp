@@ -45,6 +45,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mentalhealth.R
@@ -303,7 +306,7 @@ fun CustomTimePicker(
 
     OutlinedTextField(
         value = state.value,
-        label = { Text(text = "wakeUpTime") },
+        label = { Text(text = stringResource(id = R.string.wake_up_time)) },
         enabled = false,
         onValueChange = { newValue ->
             state.value = newValue
@@ -412,8 +415,7 @@ fun CustomLevelPicker(
 @Composable
 fun FeelingsPicker(
     text: String,
-    positive: List<String>,
-    negative: List<String>,
+    list: List<String>,
     state: MutableState<String>
 ) {
     Column(
@@ -429,51 +431,12 @@ fun FeelingsPicker(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Text(
-            text = "Positive",
-            color = TextWhiteColor
-        )
-
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
         ) {
-            positive.forEachIndexed { index, item ->
-                Column(
-
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .background(
-                                if (state.value == item) ItemSelectedColor else ItemUnselectedColor,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 10.dp)
-                            .clickable {
-                                state.value = item
-                            }
-                    ) {
-                        Text(
-                            text = item,
-                            color = TextWhiteColor
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-        }
-
-        Text(text = "Negative", color = TextWhiteColor)
-
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-        ) {
-            negative.forEachIndexed { index, item ->
-                Column(
-
-                ) {
+            list.forEachIndexed { index, item ->
+                Column {
                     Box(
                         modifier = Modifier
                             .background(
@@ -572,57 +535,6 @@ fun CustomToggle(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun FeelingPicker(
-    text: String,
-    list: List<String>,
-    state: MutableState<String>
-) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = text,
-            color = TextWhiteColor,
-            fontSize = 20.sp
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        FlowRow(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-        ) {
-            list.forEachIndexed { index, item ->
-                Column(
-
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .background(
-                                if (state.value == item) ItemSelectedColor else ItemUnselectedColor,
-                                shape = RoundedCornerShape(20.dp)
-                            )
-                            .padding(vertical = 5.dp, horizontal = 10.dp)
-                            .clickable {
-                                state.value = item
-                            }
-                    ) {
-                        Text(
-                            text = item,
-                            color = TextWhiteColor
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -687,7 +599,7 @@ fun AddGoals(
                     },
                     label = {
                         Text(
-                            text = "Enter goal description",
+                            text = stringResource(id = R.string.goal_description),
                             color = UnfocusedTextWhiteColor
                         )
                     },
@@ -720,7 +632,7 @@ fun AddGoals(
                     goalDescription = ""
                 }
             ) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel))
             }
         } else {
             Button(
@@ -728,7 +640,7 @@ fun AddGoals(
                     addingGoal = true
                 }
             ) {
-                Text(text = "Add goal")
+                Text(text = stringResource(id = R.string.add_goal))
             }
         }
     }
@@ -747,7 +659,8 @@ fun AddGoalsProgress(
     ) {
         state.value.forEach { goal ->
             Row(
-
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
             ) {
                 OutlinedTextField(
                     value = goal.description,
@@ -757,7 +670,8 @@ fun AddGoalsProgress(
                         disabledTextColor = FocusedTextFieldTextColor,
                         disabledBorderColor = UnfocusedBorderColor,
                         errorTextColor = ErrorTextColor
-                    )
+                    ),
+                    modifier = Modifier.fillMaxWidth(0.5f)
                 )
                 CustomDropDownMenu2(
                     value = "${goal.progress}%",
@@ -770,6 +684,7 @@ fun AddGoalsProgress(
                             state.value = updatedList
                         }
                     },
+                    modifier = Modifier.fillMaxWidth(0.5f)
                 )
             }
         }
@@ -791,7 +706,7 @@ fun CustomDropDownMenu2(
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth(0.4f)
+        modifier = Modifier
     ) {
         OutlinedTextField(
             value = value,
@@ -805,7 +720,8 @@ fun CustomDropDownMenu2(
                 disabledLabelColor = if (isExpanded) FocusedLabelColor else UnfocusedLabelColor,
                 errorTextColor = ErrorTextColor
             ),
-            modifier = Modifier
+            textStyle = TextStyle(textAlign = TextAlign.Center),
+            modifier = modifier
                 .clickable {
                     isExpanded = !isExpanded
                 }
