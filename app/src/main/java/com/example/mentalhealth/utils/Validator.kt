@@ -27,8 +27,8 @@ object Validator {
         return gender.isNotEmpty()
     }
 
-    fun validateProfession(profession: String) : Boolean {
-        return profession.isNotEmpty()
+    fun validateStudies(studies: String) : Boolean {
+        return studies.isNotEmpty()
     }
 
     fun validateOccupation(occupation: String) : Boolean {
@@ -62,12 +62,12 @@ object Validator {
     fun validateSignUpScreen2(
         date: String,
         gender: String,
-        profession: String,
+        studies: String,
         occupation: String
     ) : Boolean {
         return  validateDate(date) &&
                 validateGender(gender) &&
-                validateProfession(profession) &&
+                validateStudies(studies) &&
                 validateOccupation(occupation)
     }
 
@@ -88,7 +88,7 @@ object Validator {
         password: String,
         date: String,
         gender: String,
-        profession: String,
+        studies: String,
         occupation: String,
         maritalStatus: String,
         livingArea: String,
@@ -100,7 +100,7 @@ object Validator {
                 validatePassword(password) &&
                 validateDate(date) &&
                 validateGender(gender) &&
-                validateProfession(profession) &&
+                validateStudies(studies) &&
                 validateOccupation(occupation) &&
                 validateMaritalStatus(maritalStatus) &&
                 validateLivingArea(livingArea) &&

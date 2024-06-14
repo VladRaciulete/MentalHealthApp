@@ -29,6 +29,24 @@ object Constants {
         )
     )
 
+    val studiesList = listOf(
+        "Accounting", "Agriculture", "Anthropology", "Architecture", "Art", "Biology",
+        "Business Administration", "Chemistry", "Computer Science", "Criminal Justice",
+        "Dentistry", "Economics", "Education", "Engineering", "English Literature",
+        "Environmental Science", "Finance", "History", "Information Technology", "Journalism",
+        "Law", "Linguistics", "Marketing", "Mathematics", "Mechanical Engineering", "Medicine",
+        "Music", "Nursing", "Philosophy", "Physics", "Political Science", "Psychology",
+        "Sociology", "Statistics", "Theater Arts", "Veterinary Science"
+    )
+
+    val occupationsList = listOf(
+        "Accountant", "Actor/Actress", "Architect", "Artist", "Athlete",
+        "Chef", "Civil Engineer", "Dentist", "Doctor", "Electrician",
+        "Fashion Designer", "Firefighter", "Graphic Designer", "Journalist",
+        "Lawyer", "Mechanic", "Musician", "Nurse", "Photographer", "Police Officer",
+        "Professor", "Software Developer", "Teacher", "Veterinarian", "Waiter/Waitress"
+    )
+
     val genderList = listOf("Male", "Female", "Prefer not to say")
 
     val maritalStatusList = listOf("Married", "Single", "Divorced")

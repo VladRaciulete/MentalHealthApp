@@ -19,8 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -44,9 +45,12 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -122,8 +126,10 @@ fun CustomDropDownMenu(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDatePicker(
+    label: String,
     selectedDate: State<String>,
     onDateSelected: (String) -> Unit,
 ) {
@@ -153,7 +159,7 @@ fun CustomDatePicker(
           mYear: Int,
           mMonth: Int,
           mDayOfMonth: Int ->
-            onDateSelected("$mDayOfMonth-${mMonth + 1}-$mYear")
+            onDateSelected(convertToDate(mYear, mMonth, mDayOfMonth))
         },
         mYear,
         mMonth,
@@ -165,24 +171,29 @@ fun CustomDatePicker(
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Selected Date:", color = TextWhiteColor)
-            Text(text = selectedDate.value, color = TextWhiteColor)
-        }
-
-        Button(
-            onClick = {
-                mDatePickerDialog.show()
+        OutlinedTextField(
+            value = selectedDate.value,
+            label = {
+                Text(
+                    text = label,
+                    color = UnfocusedTextWhiteColor
+                )
             },
-            colors = ButtonDefaults.buttonColors(
-                //containerColor = Color(0XFF0F9D58)
-            )
-        ) {
-            Text(text = "Select Date", color = TextWhiteColor)
-        }
+            enabled = false,
+            onValueChange = {
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                containerColor = Color.Transparent,
+                disabledTextColor = UnfocusedTextFieldTextColor,
+                disabledBorderColor = UnfocusedBorderColor,
+                disabledLabelColor = UnfocusedLabelColor,
+                errorTextColor = ErrorTextColor
+            ),
+            modifier = Modifier
+                .clickable {
+                    mDatePickerDialog.show()
+                }
+        )
     }
 }
 
@@ -231,11 +242,7 @@ fun JournalDatePicker(
             mYear: Int,
             mMonth: Int,
             mDayOfMonth: Int ->
-
-            val calendar = Calendar.getInstance().apply { set(mYear, mMonth, mDayOfMonth) }
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val newSelectedDate = dateFormat.format(calendar.time)
-            onDateSelected(newSelectedDate)
+            onDateSelected(convertToDate(mYear, mMonth, mDayOfMonth))
         },
         mYear,
         mMonth,
@@ -262,6 +269,12 @@ fun JournalDatePicker(
     }
 }
 
+fun convertToDate(year: Int, month: Int, day: Int): String {
+    val calendar = Calendar.getInstance().apply { set(year, month, day) }
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    return dateFormat.format(calendar.time)
+}
+
 fun formatDate(dateString: String): String {
     val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
@@ -275,7 +288,7 @@ fun formatDate(dateString: String): String {
         return "Invalid date"
     }
 
-    if(dateString == todayDate){
+    if (dateString == todayDate) {
         return "Today, ${todayFormat.format(date)}"
     }
 
@@ -285,6 +298,7 @@ fun formatDate(dateString: String): String {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTimePicker(
+    label: String,
     state: MutableState<String>
 ) {
     var timeString = ""
@@ -295,7 +309,6 @@ fun CustomTimePicker(
         { _: TimePicker, hour: Int, minute: Int ->
             timeString = if (hour < 9) "0$hour" else hour.toString()
             timeString = if (minute < 9) "$timeString:0$minute" else "$timeString:$minute"
-            timeString = if(hour < 12) "$timeString AM" else "$timeString PM"
 
             state.value = timeString
             isExpanded = false
@@ -311,7 +324,11 @@ fun CustomTimePicker(
 
     OutlinedTextField(
         value = state.value,
-        label = { Text(text = stringResource(id = R.string.wake_up_time)) },
+        label = {
+            Text(
+                text = label
+            )
+        },
         enabled = false,
         onValueChange = { newValue ->
             state.value = newValue
@@ -471,7 +488,7 @@ fun CustomSpacerBorder(
     upSpace: Int,
     downSpace: Int,
     color: Color,
-){
+) {
     Spacer(modifier = Modifier.height(upSpace.dp))
     Box(
         modifier = Modifier
@@ -485,13 +502,13 @@ fun CustomSpacerBorder(
 @Composable
 fun CustomToggle(
     text: String,
-    state: MutableState<Map<String,Boolean>>
-){
+    state: MutableState<Map<String, Boolean>>
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
-    ){
+    ) {
         Text(
             text = text,
             color = TextWhiteColor,
@@ -503,7 +520,7 @@ fun CustomToggle(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(0.6f)
-            ){
+            ) {
                 Text(
                     text = entry.key,
                     color = TextWhiteColor
@@ -512,7 +529,7 @@ fun CustomToggle(
                 Switch(
                     checked = entry.value,
                     onCheckedChange = {
-                        state.value = state.value.toMutableMap().apply{
+                        state.value = state.value.toMutableMap().apply {
                             put(entry.key, it)
                         }
                     },
@@ -546,7 +563,7 @@ fun CustomToggle(
 fun AddGoals(
     text: String,
     state: MutableState<List<Goal>>
-){
+) {
     var addingGoal by remember { mutableStateOf(false) }
     var goalDescription by remember { mutableStateOf("") }
 
@@ -576,7 +593,7 @@ fun AddGoals(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            state.value= state.value.toMutableList().apply{ remove(goal) }
+                            state.value = state.value.toMutableList().apply { remove(goal) }
                         }
                     ) {
                         Icon(
@@ -591,7 +608,7 @@ fun AddGoals(
             Spacer(modifier = Modifier.height(20.dp))
         }
 
-        if (addingGoal){
+        if (addingGoal) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -614,7 +631,11 @@ fun AddGoals(
                     trailingIcon = {
                         IconButton(
                             onClick = {
-                                state.value = (state.value + Goal(("goal${state.value.size + 1}"),goalDescription,0)).toMutableList()
+                                state.value = (state.value + Goal(
+                                    ("goal${state.value.size + 1}"),
+                                    goalDescription,
+                                    0
+                                )).toMutableList()
                                 addingGoal = false
                                 goalDescription = ""
                             }
@@ -656,7 +677,7 @@ fun AddGoals(
 fun AddGoalsProgress(
     text: String,
     state: MutableState<List<Goal>>
-){
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -753,3 +774,78 @@ fun CustomDropDownMenu2(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomAutocompleteField(
+    label: String,
+    list: List<String>,
+    onItemSelected: (String) -> Unit,
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var selectedItem by remember { mutableStateOf("") }
+    var filteredList by remember { mutableStateOf(list) }
+    var isExpanded by remember { mutableStateOf(false) }
+
+    Column {
+        OutlinedTextField(
+            value = selectedItem,
+            onValueChange = {
+                selectedItem = it
+                filteredList = filterList(it, list)
+                isExpanded = filteredList.isNotEmpty()
+            },
+            label = {
+                Text(
+                    text = label,
+                    color = UnfocusedTextWhiteColor
+                )
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Text
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    isExpanded = false
+                }
+            ),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                containerColor = if (isExpanded) FocusedTextFieldColor else Color.Transparent,
+                disabledTextColor = if (isExpanded) FocusedTextFieldTextColor else UnfocusedTextFieldTextColor,
+                disabledBorderColor = if (isExpanded) FocusedBorderColor else UnfocusedBorderColor,
+                disabledLabelColor = if (isExpanded) FocusedLabelColor else UnfocusedLabelColor,
+                focusedTextColor = TextWhiteColor,
+                unfocusedTextColor = UnfocusedTextWhiteColor
+            )
+        )
+
+        DropdownMenu(
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false },
+            modifier = Modifier
+                .background(TextFieldBackgroundColor)
+        ) {
+            filteredList.take(5).forEach { suggestion ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = suggestion,
+                            color = TextWhiteColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = suggestion
+                        onItemSelected(selectedItem)
+                        isExpanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+private fun filterList(query: String, occupationsList: List<String>): List<String> {
+    return occupationsList.filter { it.contains(query, ignoreCase = true) }
+}
+

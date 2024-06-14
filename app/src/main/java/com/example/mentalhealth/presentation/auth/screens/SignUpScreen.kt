@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import com.example.mentalhealth.presentation.CustomDatePicker
 import com.example.mentalhealth.presentation.CustomDropDownMenu
 import com.example.mentalhealth.R
+import com.example.mentalhealth.presentation.CustomAutocompleteField
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.navigation.Screen
 import com.example.mentalhealth.presentation.auth.viewmodels.SignUpViewModel
@@ -260,7 +261,10 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            CustomDatePicker(viewModel.birthDate) { newDate ->
+            CustomDatePicker(
+                stringResource(id = R.string.pick_your_birthdate),
+                viewModel.birthDate
+            ) { newDate ->
                 viewModel.birthDate.value = newDate
             }
 
@@ -279,61 +283,22 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            OutlinedTextField(
-                value = viewModel.profession.value,
-                onValueChange = { newValue ->
-                    viewModel.profession.value = newValue
-                    viewModel.professionShowError.value = true
-                },
-                label = {
-                    Text(
-                        text = stringResource(id = R.string.profession),
-                        color = UnfocusedTextWhiteColor
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = TextFieldBackgroundColor,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedTextColor = TextWhiteColor,
-                    unfocusedTextColor = UnfocusedTextWhiteColor,
-                    errorTextColor = ErrorTextColor
-                ),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                singleLine = true,
-                maxLines = 1,
-                isError = viewModel.professionShowError.value && !Validator.validateProfession(
-                    viewModel.profession.value
-                )
+            CustomAutocompleteField(
+                stringResource(id = R.string.type_your_studies),
+                Constants.studiesList,
+                onItemSelected = { selectedItem->
+                    viewModel.studies.value = selectedItem
+                }
             )
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            OutlinedTextField(
-                value = viewModel.occupation.value,
-                onValueChange = { newValue ->
-                    viewModel.occupation.value = newValue
-                    viewModel.occupationShowError.value = true
-                },
-                label = {
-                    Text(
-                        text = stringResource(id = R.string.occupation),
-                        color = UnfocusedTextWhiteColor
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = TextFieldBackgroundColor,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedTextColor = TextWhiteColor,
-                    unfocusedTextColor = UnfocusedTextWhiteColor,
-                    errorTextColor = ErrorTextColor
-                ),
-                singleLine = true,
-                maxLines = 1,
-                isError = viewModel.occupationShowError.value && !Validator.validateOccupation(
-                    viewModel.occupation.value
-                )
+            CustomAutocompleteField(
+                stringResource(id = R.string.type_your_occupation),
+                Constants.occupationsList,
+                onItemSelected = { selectedItem->
+                    viewModel.occupation.value = selectedItem
+                }
             )
         }
 

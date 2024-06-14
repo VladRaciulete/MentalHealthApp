@@ -26,7 +26,7 @@ class SignUpViewModel @Inject constructor(
     var passwordVisible = mutableStateOf(false)
     var birthDate = mutableStateOf("")
     var gender = mutableStateOf("")
-    var profession = mutableStateOf("")
+    var studies = mutableStateOf("")
     var occupation = mutableStateOf("")
     var maritalStatus = mutableStateOf("")
     var livingArea = mutableStateOf("")
@@ -38,7 +38,7 @@ class SignUpViewModel @Inject constructor(
     var passwordShowError = mutableStateOf(false)
     var birthDateShowError = mutableStateOf(false)
     var genderShowError = mutableStateOf(false)
-    var professionShowError = mutableStateOf(false)
+    var studiesShowError = mutableStateOf(false)
     var occupationShowError = mutableStateOf(false)
     var maritalStatusShowError = mutableStateOf(false)
     var livingAreaShowError = mutableStateOf(false)
@@ -57,7 +57,7 @@ class SignUpViewModel @Inject constructor(
         return Validator.validateSignUpScreen2(
             date = birthDate.value,
             gender = gender.value,
-            profession = profession.value,
+            studies = studies.value,
             occupation = occupation.value
         )
     }
@@ -83,7 +83,7 @@ class SignUpViewModel @Inject constructor(
                     lastName.value,
                     birthDate.value,
                     gender.value,
-                    profession.value,
+                    studies.value,
                     occupation.value,
                     maritalStatus.value,
                     livingArea.value,
@@ -110,7 +110,7 @@ class SignUpViewModel @Inject constructor(
         password.value = ""
         birthDate.value = ""
         gender.value = ""
-        profession.value = ""
+        studies.value = ""
         occupation.value = ""
         maritalStatus.value = ""
         livingArea.value = ""
@@ -121,7 +121,7 @@ class SignUpViewModel @Inject constructor(
         passwordShowError.value = false
         birthDateShowError.value = false
         genderShowError.value = false
-        professionShowError.value = false
+        studiesShowError.value = false
         occupationShowError.value = false
         maritalStatusShowError.value = false
         livingAreaShowError.value = false

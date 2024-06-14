@@ -14,7 +14,7 @@
     <string name="birth_date">Data de nastere</string>
     <string name="selected_date">Data selectata</string>
     <string name="gender">Gen</string>
-    <string name="profession">Profesie</string>
+    <string name="studies">Studii</string>
     <string name="occupation">Ocupatie</string>
     <string name="marital_status">Stare Civila</string>
     <string name="living_area">Mediu</string>
@@ -62,4 +62,7 @@
     <string name="how_can_you_make_tomorrow_better">Cum ai putea face ziua de maine mai buna?</string>
     <string name="yes">Da</string>
     <string name="no">Nu</string>
+    <string name="type_your_studies">Introdu studiile</string>
+    <string name="type_your_occupation">Introdu ocupatia</string>
+    <string name="pick_your_birthdate">Alege data de nastere</string>
 </resources>

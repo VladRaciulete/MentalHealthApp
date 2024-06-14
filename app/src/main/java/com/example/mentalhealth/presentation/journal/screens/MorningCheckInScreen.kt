@@ -89,7 +89,10 @@ fun MorningCheckInScreen(
             item {
                 Spacer(modifier = Modifier.height(15.dp))
 
-                CustomTimePicker(viewModel.wakeUpTime)
+                CustomTimePicker(
+                    stringResource(id = R.string.wake_up_time),
+                    viewModel.wakeUpTime
+                )
 
                 Spacer(modifier = Modifier.height(15.dp))
 

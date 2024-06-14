@@ -13,7 +13,7 @@
     <string name="birth_date">Birth Date</string>
     <string name="selected_date">Selected Date</string>
     <string name="gender">Gender</string>
-    <string name="profession">Profession</string>
+    <string name="studies">Studies</string>
     <string name="occupation">Occupation</string>
     <string name="marital_status">Marital Status</string>
     <string name="living_area">Living Area</string>
@@ -61,4 +61,7 @@
     <string name="how_can_you_make_tomorrow_better">How can you make tomorrow better?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="type_your_studies">Type your studies</string>
+    <string name="type_your_occupation">Type your occupation</string>
+    <string name="pick_your_birthdate">Pick your birthdate</string>
 </resources>
