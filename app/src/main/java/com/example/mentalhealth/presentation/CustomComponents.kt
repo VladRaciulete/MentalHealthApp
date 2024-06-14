@@ -226,11 +226,16 @@ fun JournalDatePicker(
 
     val mDatePickerDialog = DatePickerDialog(
         mContext,
-        { _: DatePicker,
-          mYear: Int,
-          mMonth: Int,
-          mDayOfMonth: Int ->
-            onDateSelected("$mDayOfMonth-${mMonth + 1}-$mYear")
+        {
+            _: DatePicker,
+            mYear: Int,
+            mMonth: Int,
+            mDayOfMonth: Int ->
+
+            val calendar = Calendar.getInstance().apply { set(mYear, mMonth, mDayOfMonth) }
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val newSelectedDate = dateFormat.format(calendar.time)
+            onDateSelected(newSelectedDate)
         },
         mYear,
         mMonth,

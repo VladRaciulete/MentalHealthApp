@@ -70,6 +70,7 @@ fun JournalScreen(
                     viewModel.date.value
                 ) { newDate ->
                     viewModel.date.value = newDate
+                    viewModel.getJournalEntry()
                 }
 
                 Icon(
