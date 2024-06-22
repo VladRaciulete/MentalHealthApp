@@ -120,6 +120,8 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
             journalViewModel.resetViewModelFields()
             recommendationsViewModel.resetViewModelFields()
             profileViewModel.resetViewModelFields()
+            journalViewModel.resetViewModelDate()
+            recommendationsViewModel.resetViewModelDate()
         }
 
         is AuthState.SigningUp -> {
@@ -128,6 +130,8 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
             journalViewModel.resetViewModelFields()
             recommendationsViewModel.resetViewModelFields()
             profileViewModel.resetViewModelFields()
+            journalViewModel.resetViewModelDate()
+            recommendationsViewModel.resetViewModelDate()
         }
     }
 }

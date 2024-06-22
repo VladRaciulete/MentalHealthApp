@@ -42,7 +42,9 @@ class LogInViewModel @Inject constructor(
                     if (logInResult.isSuccess)
                         UiState.Success(SuccessEvent.SUCCESS)
                     else
-                        UiState.Error(logInResult.exceptionOrNull()?.message ?: ErrorEvent.LOGIN_ERROR)
+                        UiState.Error(
+                            logInResult.exceptionOrNull()?.message ?: ErrorEvent.LOGIN_ERROR
+                        )
 
                 if (logInResult.isSuccess) {
                     appStateViewModel.authState.value = AuthState.Authenticated
@@ -53,6 +55,7 @@ class LogInViewModel @Inject constructor(
                 resetViewModelFields()
             } catch (e: Exception) {
                 appStateViewModel.authState.value = AuthState.Unauthenticated
+                appStateViewModel.uiState.value = UiState.Error(e.message ?: ErrorEvent.LOGIN_ERROR)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.mentalhealth.utils
 
 object SuccessEvent {
     const val SUCCESS = ""
+    const val LOGOUT_SUCCESS = "Logout successful!"
     const val USER_ACCOUNT_CREATED = "User account created!"
     const val USER_ACCOUNT_LOADED = "Used account loaded!"
     const val USER_ACCOUNT_UPDATED = "Used account updated!"

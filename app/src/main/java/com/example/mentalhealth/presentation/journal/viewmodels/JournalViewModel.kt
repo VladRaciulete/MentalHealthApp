@@ -99,7 +99,8 @@ class JournalViewModel @Inject constructor(
                     dayFeeling.value = entry.dayFeeling
                     whatCanIDoToMakeTomorrowBetter.value = entry.whatCanIDoToMakeTomorrowBetter
 
-                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.JOURNAL_DATA_LOADED)
+                    appStateViewModel.uiState.value =
+                        UiState.Success(SuccessEvent.JOURNAL_DATA_LOADED)
                 } else {
                     appStateViewModel.uiState.value =
                         UiState.Error(ErrorEvent.ERROR_RETRIEVING_JOURNAL_DATA)
@@ -145,12 +146,16 @@ class JournalViewModel @Inject constructor(
                     if (result.isSuccess)
                         UiState.Success(SuccessEvent.JOURNAL_DATA_ADDED)
                     else
-                        UiState.Error(result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
+                        UiState.Error(
+                            result.exceptionOrNull()?.message
+                                ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA
+                        )
 
                 getJournalEntry()
 
             } catch (e: Exception) {
-                UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
             }
         }
     }
@@ -190,14 +195,16 @@ class JournalViewModel @Inject constructor(
                         UiState.Success(SuccessEvent.JOURNAL_DATA_ADDED)
                     else
                         UiState.Error(
-                            result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA
+                            result.exceptionOrNull()?.message
+                                ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA
                         )
 
                 getJournalEntry()
                 makeMLPrediction()
 
             } catch (e: Exception) {
-                UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
             }
         }
     }
@@ -208,10 +215,9 @@ class JournalViewModel @Inject constructor(
                 val loadedUser = loadUserDataUseCase()
                 val user: User
 
-                if (loadedUser != null){
+                if (loadedUser != null) {
                     user = loadedUser
-                }
-                else {
+                } else {
                     user = User()
                 }
                 val mapper = MLInputMapper()
@@ -253,7 +259,8 @@ class JournalViewModel @Inject constructor(
                         )
 
             } catch (e: Exception) {
-                UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_ML_DATA)
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_ML_DATA)
             }
         }
     }
@@ -285,6 +292,11 @@ class JournalViewModel @Inject constructor(
         dayRating.value = 0
         dayFeeling.value = ""
         whatCanIDoToMakeTomorrowBetter.value = ""
+        timeStamp.value = System.currentTimeMillis()
+    }
+
+    fun resetViewModelDate() {
+        date.value = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
     }
 
     fun printAllData() {

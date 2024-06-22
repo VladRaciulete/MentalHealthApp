@@ -378,15 +378,19 @@ fun JournalScreen(
                                 )
                             }
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
                                     .background(JournalEntryBackgroundColor1)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.you_took_care_of_yourself) + ": " + viewModel.whatDidIDoToTakeCareOfMyself.value,
+                                    text = stringResource(id = R.string.how_you_took_care_of_yourself) + ": ",
+                                    color = TextWhiteColor
+                                )
+                                Text(
+                                    text = viewModel.whatDidIDoToTakeCareOfMyself.value,
                                     color = TextWhiteColor
                                 )
                             }

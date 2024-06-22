@@ -1,11 +1,8 @@
 package com.example.mentalhealth.presentation.profile.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mentalhealth.R
-import com.example.mentalhealth.presentation.profile.SettingsItem
 import com.example.mentalhealth.domain.model.User
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.domain.usecase.profile.LogOutUseCase
@@ -54,13 +51,14 @@ class ProfileViewModel @Inject constructor(
 
                 if (logOutResult.isSuccess) {
                     appStateViewModel.authState.value = AuthState.Unauthenticated
-                    appStateViewModel.uiState.value = UiState.Idle
+                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.LOGOUT_SUCCESS)
                     resetViewModelFields()
                 } else {
                     appStateViewModel.uiState.value = UiState.Error(ErrorEvent.LOGOUT_ERROR)
                 }
             } catch (e: Exception) {
-                appStateViewModel.uiState.value = UiState.Error(e.message ?: ErrorEvent.LOGOUT_ERROR)
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: ErrorEvent.LOGOUT_ERROR)
             }
         }
     }
@@ -82,10 +80,11 @@ class ProfileViewModel @Inject constructor(
                     livingArea.value = user.livingArea
                     publicFigure.value = user.publicFigure
 
-                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.USER_ACCOUNT_LOADED)
-                }
-                else {
-                    appStateViewModel.uiState.value = UiState.Error(ErrorEvent.ERROR_RETRIEVING_USER_DATA)
+                    appStateViewModel.uiState.value =
+                        UiState.Success(SuccessEvent.USER_ACCOUNT_LOADED)
+                } else {
+                    appStateViewModel.uiState.value =
+                        UiState.Error(ErrorEvent.ERROR_RETRIEVING_USER_DATA)
                 }
             } catch (e: Exception) {
                 appStateViewModel.uiState.value =
@@ -115,7 +114,9 @@ class ProfileViewModel @Inject constructor(
                     if (result.isSuccess)
                         UiState.Success(SuccessEvent.USER_ACCOUNT_UPDATED)
                     else
-                        UiState.Error(result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_UPDATING_USER_DATA)
+                        UiState.Error(
+                            result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_UPDATING_USER_DATA
+                        )
 
                 resetViewModelFields()
             } catch (e: Exception) {

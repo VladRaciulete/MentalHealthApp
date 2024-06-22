@@ -73,34 +73,44 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp() {
         viewModelScope.launch {
-            appStateViewModel.authState.value = AuthState.SigningUp
-            appStateViewModel.uiState.value = UiState.Loading
+            try {
+                appStateViewModel.authState.value = AuthState.SigningUp
+                appStateViewModel.uiState.value = UiState.Loading
 
-            val signUpResult = signUpUseCase(
-                emailAddress.value,
-                password.value,
-                User(
-                    firstName.value,
-                    lastName.value,
-                    birthDate.value,
-                    gender.value,
-                    studies.value,
-                    occupation.value,
-                    maritalStatus.value,
-                    livingArea.value,
-                    publicFigure.value
+                val signUpResult = signUpUseCase(
+                    emailAddress.value,
+                    password.value,
+                    User(
+                        firstName.value,
+                        lastName.value,
+                        birthDate.value,
+                        gender.value,
+                        studies.value,
+                        occupation.value,
+                        maritalStatus.value,
+                        livingArea.value,
+                        publicFigure.value
+                    )
                 )
-            )
-            appStateViewModel.uiState.value =
-                if (signUpResult.isSuccess)
-                    UiState.Success(SuccessEvent.USER_ACCOUNT_CREATED)
-                else
-                    UiState.Error(signUpResult.exceptionOrNull()?.message ?: ErrorEvent.SIGNUP_ERROR)
+                appStateViewModel.uiState.value =
+                    if (signUpResult.isSuccess)
+                        UiState.Success(SuccessEvent.USER_ACCOUNT_CREATED)
+                    else
+                        UiState.Error(
+                            signUpResult.exceptionOrNull()?.message ?: ErrorEvent.SIGNUP_ERROR
+                        )
 
-            if (signUpResult.isSuccess) {
-                appStateViewModel.authState.value = AuthState.Authenticated
+                if (signUpResult.isSuccess) {
+                    appStateViewModel.authState.value = AuthState.Authenticated
+                } else {
+                    appStateViewModel.authState.value = AuthState.Unauthenticated
+                }
+                resetViewModelFields()
+            } catch (e: Exception) {
+                appStateViewModel.authState.value = AuthState.Unauthenticated
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: ErrorEvent.SIGNUP_ERROR)
             }
-            resetViewModelFields()
         }
     }
 

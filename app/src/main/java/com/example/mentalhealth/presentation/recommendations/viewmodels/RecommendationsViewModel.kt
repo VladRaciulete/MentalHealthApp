@@ -3,7 +3,6 @@ package com.example.mentalhealth.presentation.recommendations.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.domain.usecase.recommendations.GetMLOutputUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.Constants
@@ -46,10 +45,14 @@ class RecommendationsViewModel @Inject constructor(
 
                 if (mlOutput != null) {
                     moodPrediction.value = Constants.todayFeelings[mlOutput.moodPrediction]
-                    recommendation1.value = Constants.personalizedRecommendations[mlOutput.recommendation1]
-                    recommendation2.value = Constants.personalizedRecommendations[mlOutput.recommendation2]
-                    recommendation3.value = Constants.personalizedRecommendations[mlOutput.recommendation3]
-                    recommendation4.value = Constants.personalizedRecommendations[mlOutput.recommendation4]
+                    recommendation1.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation1]
+                    recommendation2.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation2]
+                    recommendation3.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation3]
+                    recommendation4.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation4]
 
                     appStateViewModel.uiState.value = UiState.Success(SuccessEvent.ML_DATA_LOADED)
                 } else {
@@ -69,6 +72,10 @@ class RecommendationsViewModel @Inject constructor(
         recommendation2.value = ""
         recommendation3.value = ""
         recommendation4.value = ""
+    }
+
+    fun resetViewModelDate() {
+        date.value = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
     }
 
     fun formatDate(inputDate: String): Date {
