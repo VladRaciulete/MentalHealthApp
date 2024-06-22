@@ -31,7 +31,7 @@ fun StatisticsScreen(navController: NavController) {
         BottomMenu(
             navController = navController,
             items = Constants.bottomMenuElementList,
-            initialSelectedItemIndex = 1,
+            initialSelectedItemIndex = 2,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }

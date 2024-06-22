@@ -13,6 +13,7 @@ import com.example.mentalhealth.domain.usecase.journal.MLPredictionUseCase
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.ml.mapper.MLInputMapper
 import com.example.mentalhealth.presentation.AppStateViewModel
+import com.example.mentalhealth.utils.ErrorEvent
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -98,14 +99,14 @@ class JournalViewModel @Inject constructor(
                     dayFeeling.value = entry.dayFeeling
                     whatCanIDoToMakeTomorrowBetter.value = entry.whatCanIDoToMakeTomorrowBetter
 
-                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.USER_DATA_LOADED)
+                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.JOURNAL_DATA_LOADED)
                 } else {
                     appStateViewModel.uiState.value =
-                        UiState.Error("Error while retrieving journal entry")
+                        UiState.Error(ErrorEvent.ERROR_RETRIEVING_JOURNAL_DATA)
                 }
             } catch (e: Exception) {
                 appStateViewModel.uiState.value =
-                    UiState.Error(e.message ?: "Error while retrieving journal entry")
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_RETRIEVING_JOURNAL_DATA)
             }
         }
     }
@@ -142,16 +143,14 @@ class JournalViewModel @Inject constructor(
 
                 appStateViewModel.uiState.value =
                     if (result.isSuccess)
-                        UiState.Success(SuccessEvent.JOURNAL_ENTRY_ADDED)
+                        UiState.Success(SuccessEvent.JOURNAL_DATA_ADDED)
                     else
-                        UiState.Error(
-                            result.exceptionOrNull()?.message ?: "Error while adding journal entry"
-                        )
+                        UiState.Error(result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
 
                 getJournalEntry()
 
             } catch (e: Exception) {
-                UiState.Error(e.message ?: "Error while adding journal entry")
+                UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
             }
         }
     }
@@ -188,17 +187,17 @@ class JournalViewModel @Inject constructor(
 
                 appStateViewModel.uiState.value =
                     if (result.isSuccess)
-                        UiState.Success(SuccessEvent.JOURNAL_ENTRY_ADDED)
+                        UiState.Success(SuccessEvent.JOURNAL_DATA_ADDED)
                     else
                         UiState.Error(
-                            result.exceptionOrNull()?.message ?: "Error while adding journal entry"
+                            result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA
                         )
 
                 getJournalEntry()
                 makeMLPrediction()
 
             } catch (e: Exception) {
-                UiState.Error(e.message ?: "Error while adding journal entry")
+                UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_JOURNAL_DATA)
             }
         }
     }
@@ -247,20 +246,19 @@ class JournalViewModel @Inject constructor(
 
                 appStateViewModel.uiState.value =
                     if (result.isSuccess)
-                        UiState.Success(SuccessEvent.ML_ENTRY_ADDED)
+                        UiState.Success(SuccessEvent.ML_DATA_ADDED)
                     else
                         UiState.Error(
-                            result.exceptionOrNull()?.message ?: "Error while adding ML entry"
+                            result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_ADDING_ML_DATA
                         )
 
             } catch (e: Exception) {
-                println("Catch journal ${e.message}")
-                UiState.Error(e.message ?: "ML error")
+                UiState.Error(e.message ?: ErrorEvent.ERROR_ADDING_ML_DATA)
             }
         }
     }
 
-    private fun resetViewModelFields() {
+    fun resetViewModelFields() {
         morningCheckIn.value = false
         eveningCheckIn.value = false
         wakeUpTime.value = ""

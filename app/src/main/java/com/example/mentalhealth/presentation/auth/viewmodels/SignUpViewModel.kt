@@ -8,6 +8,7 @@ import com.example.mentalhealth.domain.usecase.auth.SignUpUseCase
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.ErrorEvent
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -94,7 +95,7 @@ class SignUpViewModel @Inject constructor(
                 if (signUpResult.isSuccess)
                     UiState.Success(SuccessEvent.USER_ACCOUNT_CREATED)
                 else
-                    UiState.Error(signUpResult.exceptionOrNull()?.message ?: "Signup Error")
+                    UiState.Error(signUpResult.exceptionOrNull()?.message ?: ErrorEvent.SIGNUP_ERROR)
 
             if (signUpResult.isSuccess) {
                 appStateViewModel.authState.value = AuthState.Authenticated
@@ -103,7 +104,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    private fun resetViewModelFields() {
+    fun resetViewModelFields() {
         firstName.value = ""
         lastName.value = ""
         emailAddress.value = ""

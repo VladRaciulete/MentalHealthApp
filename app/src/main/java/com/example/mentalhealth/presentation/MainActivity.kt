@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mentalhealth.presentation.navigation.Navigation
 import com.example.mentalhealth.ui.theme.BackgroundColor
 import com.example.mentalhealth.ui.theme.MentalHealthTheme
+import com.example.mentalhealth.utils.AuthState
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(BackgroundColor)
                 ){
-                    Navigation()
+                    Navigation(appStateViewModel)
                 }
                 when (appStateViewModel.uiState.value) {
                     is UiState.Idle -> {
@@ -54,11 +55,8 @@ class MainActivity : ComponentActivity() {
                             SuccessEvent.USER_ACCOUNT_CREATED -> {
                                 Toast.makeText(appContext, SuccessEvent.USER_ACCOUNT_CREATED, Toast.LENGTH_SHORT).show()
                             }
-                            SuccessEvent.USER_DATA_LOADED -> {
-                                //Toast.makeText(appContext, SuccessEvent.USER_DATA_LOADED, Toast.LENGTH_SHORT).show()
-                            }
-                            SuccessEvent.JOURNAL_ENTRY_ADDED -> {
-                                Toast.makeText(appContext, SuccessEvent.JOURNAL_ENTRY_ADDED, Toast.LENGTH_SHORT).show()
+                            SuccessEvent.JOURNAL_DATA_ADDED -> {
+                                Toast.makeText(appContext, SuccessEvent.JOURNAL_DATA_ADDED, Toast.LENGTH_SHORT).show()
                             }
                         }
                         appStateViewModel.uiState.value = UiState.Idle

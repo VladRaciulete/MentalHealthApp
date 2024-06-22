@@ -27,9 +27,10 @@ import com.example.mentalhealth.presentation.profile.screens.NotificationsSettin
 import com.example.mentalhealth.presentation.profile.screens.ProfileScreen
 import com.example.mentalhealth.presentation.recommendations.screens.RecommendationsScreen
 import com.example.mentalhealth.presentation.recommendations.viewmodels.RecommendationsViewModel
+import com.example.mentalhealth.utils.AuthState
 
 @Composable
-fun Navigation() {
+fun Navigation(appStateViewModel: AppStateViewModel) {
     val navController = rememberNavController()
     val signUpViewModel: SignUpViewModel = hiltViewModel()
     val logInViewModel: LogInViewModel = hiltViewModel()
@@ -103,6 +104,30 @@ fun Navigation() {
             composable(route = Screen.NotificationsSettingsScreen.route) {
                 NotificationsSettingsScreen(navController = navController, viewModel = profileViewModel)
             }
+        }
+    }
+
+    when (appStateViewModel.authState.value) {
+        is AuthState.Authenticated -> {
+        }
+
+        is AuthState.Unauthenticated -> {
+        }
+
+        is AuthState.LoggingIn -> {
+            signUpViewModel.resetViewModelFields()
+            logInViewModel.resetViewModelFields()
+            journalViewModel.resetViewModelFields()
+            recommendationsViewModel.resetViewModelFields()
+            profileViewModel.resetViewModelFields()
+        }
+
+        is AuthState.SigningUp -> {
+            signUpViewModel.resetViewModelFields()
+            logInViewModel.resetViewModelFields()
+            journalViewModel.resetViewModelFields()
+            recommendationsViewModel.resetViewModelFields()
+            profileViewModel.resetViewModelFields()
         }
     }
 }

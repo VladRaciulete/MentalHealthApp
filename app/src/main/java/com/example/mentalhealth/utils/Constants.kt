@@ -13,14 +13,14 @@ object Constants {
             Screen.JournalScreen.route
         ),
         BottomMenuItem(
-            "Statistics",
-            R.drawable.ic_stats,
-            Screen.StatisticsScreen.route
-        ),
-        BottomMenuItem(
             "Recommendations",
             R.drawable.ic_recommended,
             Screen.RecommendationsScreen.route
+        ),
+        BottomMenuItem(
+            "Statistics",
+            R.drawable.ic_stats,
+            Screen.StatisticsScreen.route
         ),
         BottomMenuItem(
             "Account",
@@ -49,11 +49,11 @@ object Constants {
 
     val genderList = listOf("Male", "Female", "Prefer not to say")
 
-    val maritalStatusList = listOf("Married", "Single", "Divorced")
+    val maritalStatusList = listOf("Single", "Married", "Divorced", "Prefer not to say")
 
-    val livingAreaList = listOf("Rural", "Urban")
+    val livingAreaList = listOf("Urban", "Rural")
 
-    val publicFigureList = listOf("Yes", "No")
+    val publicFigureList = listOf("No", "Yes")
 
     val profileScreenSettingsList = listOf(
         SettingsItem(R.string.account, Screen.AccountSettingsScreen.route),

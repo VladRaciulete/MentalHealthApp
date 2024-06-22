@@ -7,6 +7,7 @@ import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.domain.usecase.recommendations.GetMLOutputUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.Constants
+import com.example.mentalhealth.utils.ErrorEvent
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,16 +54,16 @@ class RecommendationsViewModel @Inject constructor(
                     appStateViewModel.uiState.value = UiState.Success(SuccessEvent.ML_DATA_LOADED)
                 } else {
                     appStateViewModel.uiState.value =
-                        UiState.Error("Error while retrieving ML output")
+                        UiState.Error(ErrorEvent.ERROR_RETRIEVING_ML_DATA)
                 }
             } catch (e: Exception) {
                 appStateViewModel.uiState.value =
-                    UiState.Error(e.message ?: "Error while retrieving ML output")
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_RETRIEVING_ML_DATA)
             }
         }
     }
 
-    private fun resetViewModelFields() {
+    fun resetViewModelFields() {
         moodPrediction.value = ""
         recommendation1.value = ""
         recommendation2.value = ""

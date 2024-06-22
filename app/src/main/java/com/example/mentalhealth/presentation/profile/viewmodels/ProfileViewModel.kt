@@ -12,6 +12,7 @@ import com.example.mentalhealth.domain.usecase.profile.LogOutUseCase
 import com.example.mentalhealth.domain.usecase.profile.UpdateUserDataUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.ErrorEvent
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,10 +57,10 @@ class ProfileViewModel @Inject constructor(
                     appStateViewModel.uiState.value = UiState.Idle
                     resetViewModelFields()
                 } else {
-                    appStateViewModel.uiState.value = UiState.Error("Logout failed")
+                    appStateViewModel.uiState.value = UiState.Error(ErrorEvent.LOGOUT_ERROR)
                 }
             } catch (e: Exception) {
-                appStateViewModel.uiState.value = UiState.Error(e.message ?: "Logout error")
+                appStateViewModel.uiState.value = UiState.Error(e.message ?: ErrorEvent.LOGOUT_ERROR)
             }
         }
     }
@@ -67,6 +68,7 @@ class ProfileViewModel @Inject constructor(
     fun loadUserData() {
         viewModelScope.launch {
             try {
+                appStateViewModel.uiState.value = UiState.Loading
                 val user = loadUserDataUseCase()
 
                 if (user != null) {
@@ -79,10 +81,15 @@ class ProfileViewModel @Inject constructor(
                     maritalStatus.value = user.maritalStatus
                     livingArea.value = user.livingArea
                     publicFigure.value = user.publicFigure
+
+                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.USER_ACCOUNT_LOADED)
+                }
+                else {
+                    appStateViewModel.uiState.value = UiState.Error(ErrorEvent.ERROR_RETRIEVING_USER_DATA)
                 }
             } catch (e: Exception) {
                 appStateViewModel.uiState.value =
-                    UiState.Error(e.message ?: "User data loading error")
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_RETRIEVING_USER_DATA)
             }
         }
     }
@@ -106,19 +113,19 @@ class ProfileViewModel @Inject constructor(
 
                 appStateViewModel.uiState.value =
                     if (result.isSuccess)
-                        UiState.Success(SuccessEvent.USER_DATA_UPDATED)
+                        UiState.Success(SuccessEvent.USER_ACCOUNT_UPDATED)
                     else
-                        UiState.Error(result.exceptionOrNull()?.message ?: "User Data Update Error")
+                        UiState.Error(result.exceptionOrNull()?.message ?: ErrorEvent.ERROR_UPDATING_USER_DATA)
 
                 resetViewModelFields()
             } catch (e: Exception) {
                 appStateViewModel.uiState.value =
-                    UiState.Error(e.message ?: "User Data Update Error")
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_UPDATING_USER_DATA)
             }
         }
     }
 
-    private fun resetViewModelFields() {
+    fun resetViewModelFields() {
         firstName.value = ""
         lastName.value = ""
         birthDate.value = ""

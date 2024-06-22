@@ -150,7 +150,7 @@ fun RecommendationsScreen(
         BottomMenu(
             navController = navController,
             items = Constants.bottomMenuElementList,
-            initialSelectedItemIndex = 2,
+            initialSelectedItemIndex = 1,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }

@@ -72,12 +72,6 @@ fun BottomMenuItem(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
-                .background(
-                    if (isSelected)
-                        Color.Transparent//SelectedButtonAccentColor
-                    else
-                        Color.Transparent
-                )
                 .padding(5.dp)
         ) {
             Icon(

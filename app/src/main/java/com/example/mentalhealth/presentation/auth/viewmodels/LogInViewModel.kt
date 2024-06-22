@@ -8,6 +8,7 @@ import com.example.mentalhealth.domain.usecase.auth.LogInUseCase
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.ErrorEvent
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +42,7 @@ class LogInViewModel @Inject constructor(
                     if (logInResult.isSuccess)
                         UiState.Success(SuccessEvent.SUCCESS)
                     else
-                        UiState.Error(logInResult.exceptionOrNull()?.message ?: "login error")
+                        UiState.Error(logInResult.exceptionOrNull()?.message ?: ErrorEvent.LOGIN_ERROR)
 
                 if (logInResult.isSuccess) {
                     appStateViewModel.authState.value = AuthState.Authenticated
@@ -49,15 +50,18 @@ class LogInViewModel @Inject constructor(
                     appStateViewModel.authState.value = AuthState.Unauthenticated
                 }
 
-                emailAddress.value = ""
-                password.value = ""
-                passwordVisible.value = false
-                emailAddressShowError.value = false
-                passwordShowError.value = false
-
+                resetViewModelFields()
             } catch (e: Exception) {
                 appStateViewModel.authState.value = AuthState.Unauthenticated
             }
         }
+    }
+
+    fun resetViewModelFields() {
+        emailAddress.value = ""
+        password.value = ""
+        passwordVisible.value = false
+        emailAddressShowError.value = false
+        passwordShowError.value = false
     }
 }
