@@ -25,6 +25,8 @@ import com.example.mentalhealth.presentation.journal.viewmodels.JournalViewModel
 import com.example.mentalhealth.presentation.profile.screens.AccountSettingsScreen
 import com.example.mentalhealth.presentation.profile.screens.NotificationsSettingsScreen
 import com.example.mentalhealth.presentation.profile.screens.ProfileScreen
+import com.example.mentalhealth.presentation.recommendations.screens.RecommendationsScreen
+import com.example.mentalhealth.presentation.recommendations.viewmodels.RecommendationsViewModel
 
 @Composable
 fun Navigation() {
@@ -33,6 +35,7 @@ fun Navigation() {
     val logInViewModel: LogInViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
     val journalViewModel: JournalViewModel = hiltViewModel()
+    val recommendationsViewModel: RecommendationsViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -86,7 +89,7 @@ fun Navigation() {
             }
 
             composable(route = Screen.RecommendationsScreen.route) {
-                RecommendationsScreen(navController = navController)
+                RecommendationsScreen(navController = navController, viewModel = recommendationsViewModel)
             }
 
             composable(route = Screen.ProfileScreen.route) {

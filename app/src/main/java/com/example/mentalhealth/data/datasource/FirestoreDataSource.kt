@@ -1,7 +1,9 @@
 package com.example.mentalhealth.data.datasource
 
 import com.example.mentalhealth.domain.model.DailyJournal
+import com.example.mentalhealth.domain.model.MLOutput
 import com.example.mentalhealth.domain.model.User
+import com.example.mentalhealth.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -145,5 +147,52 @@ class FirestoreDataSource @Inject constructor(
         }
     }
 
+    suspend fun addMLOutput(mlOutput: MLOutput, date: String): Result<Unit> {
+        val currentUser = auth.currentUser
 
+        return if (currentUser != null) {
+            try {
+                firestore.collection("users")
+                    .document(currentUser.uid)
+                    .collection("mlOutput")
+                    .document(date)
+                    .set(mlOutput)
+                    .await()
+
+                Result.success(Unit)
+            } catch (e: Exception) {
+                println("Catch firestore ${e.message}")
+                Result.failure(e)
+            }
+        } else {
+            Result.failure(Exception("Current user is null"))
+        }
+    }
+
+    suspend fun getMLOutput(date: String): MLOutput? {
+        val currentUser = auth.currentUser
+
+        return if (currentUser != null) {
+            try {
+                val mlOutput = firestore.collection("users")
+                    .document(currentUser.uid)
+                    .collection("mlOutput")
+                    .document(date)
+                    .get()
+                    .await()
+
+                if (mlOutput.exists()) {
+                    val mlOutputEntry = mlOutput.toObject(MLOutput::class.java)
+                    mlOutputEntry
+                } else {
+                    null
+                }
+
+            } catch (e: Exception) {
+                null
+            }
+        } else {
+            null
+        }
+    }
 }

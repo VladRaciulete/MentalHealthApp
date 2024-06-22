@@ -5,9 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mentalhealth.domain.model.DailyJournal
 import com.example.mentalhealth.domain.model.Goal
+import com.example.mentalhealth.domain.model.User
 import com.example.mentalhealth.domain.usecase.journal.AddEveningJournalEntryUseCase
 import com.example.mentalhealth.domain.usecase.journal.AddMorningJournalEntryUseCase
 import com.example.mentalhealth.domain.usecase.journal.GetJournalEntryUseCase
+import com.example.mentalhealth.domain.usecase.journal.MLPredictionUseCase
+import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
+import com.example.mentalhealth.ml.mapper.MLInputMapper
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
@@ -26,6 +30,8 @@ class JournalViewModel @Inject constructor(
     val addMorningJournalEntryUseCase: AddMorningJournalEntryUseCase,
     val addEveningJournalEntryUseCase: AddEveningJournalEntryUseCase,
     val getJournalEntryUseCase: GetJournalEntryUseCase,
+    val mlPredictionUseCase: MLPredictionUseCase,
+    val loadUserDataUseCase: LoadUserDataUseCase,
     val appStateViewModel: AppStateViewModel,
 ) : ViewModel() {
     var wakeUpTime = mutableStateOf("")
@@ -189,9 +195,67 @@ class JournalViewModel @Inject constructor(
                         )
 
                 getJournalEntry()
+                makeMLPrediction()
 
             } catch (e: Exception) {
                 UiState.Error(e.message ?: "Error while adding journal entry")
+            }
+        }
+    }
+
+    private fun makeMLPrediction() {
+        viewModelScope.launch {
+            try {
+                val loadedUser = loadUserDataUseCase()
+                val user: User
+
+                if (loadedUser != null){
+                    user = loadedUser
+                }
+                else {
+                    user = User()
+                }
+                val mapper = MLInputMapper()
+
+                val result = mlPredictionUseCase(
+                    mapper.map(
+                        DailyJournal(
+                            morningCheckIn = morningCheckIn.value,
+                            eveningCheckIn = true,
+                            wakeUpTime = wakeUpTime.value,
+                            hoursSlept = hoursSlept.value,
+                            dailyGoals = dailyGoals.value,
+                            todayIAmGratefulFor = todayIAmGratefulFor.value,
+                            todayIFelt = todayIFelt.value,
+                            stressLevel = stressLevel.value,
+                            waterIntake = waterIntake.value,
+                            energyLevel = energyLevel.value,
+                            loveLevel = loveLevel.value,
+                            didIHaveEnough = didIHaveEnough.value,
+                            whatWentWell = whatWentWell.value,
+                            whatWentBad = whatWentBad.value,
+                            whatDidIDoToTakeCareOfMyself = whatDidIDoToTakeCareOfMyself.value,
+                            bestMomentOfTheDay = bestMomentOfTheDay.value,
+                            dayRating = dayRating.value,
+                            dayFeeling = dayFeeling.value,
+                            whatCanIDoToMakeTomorrowBetter = whatCanIDoToMakeTomorrowBetter.value,
+                        ),
+                        user
+                    ),
+                    date.value
+                )
+
+                appStateViewModel.uiState.value =
+                    if (result.isSuccess)
+                        UiState.Success(SuccessEvent.ML_ENTRY_ADDED)
+                    else
+                        UiState.Error(
+                            result.exceptionOrNull()?.message ?: "Error while adding ML entry"
+                        )
+
+            } catch (e: Exception) {
+                println("Catch journal ${e.message}")
+                UiState.Error(e.message ?: "ML error")
             }
         }
     }

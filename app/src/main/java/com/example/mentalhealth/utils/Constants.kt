@@ -86,4 +86,36 @@ object Constants {
     )
 
     val dayFeeling = listOf("Very bad", "Bad", "decent", "Good", "Very good")
+
+    val personalizedRecommendations = listOf(
+            "Try to have 7-9 hours of sleep", "Try to maintain a consistent sleep schedule",
+            "Don't forget to stay hydrated", "Exercise at least 30 minutes a day", "Keep a balanced diet",
+            "Celebrate your achievements", "Share your happiness with others",
+            "Engage in something stimulating", "Plan something fun for the day",
+            "Do something that makes you smile", "Spend time with loved ones",
+            "Spread positivity to others", "Reflect on things that bring you joy",
+            "Practice gratitude", "Enjoy the present moment",
+            "Write down what you're grateful for", "Share your gratitude with friends and family",
+            "Set new goals for the future", "Visualize your dreams",
+            "Acknowledge your accomplishments", "Reward yourself",
+            "Practice relaxation techniques", "Find a peaceful place to unwind",
+            "Check in with yourself regularly", "Engage in hobbies you enjoy",
+            "Reflect on your achievements", "Plan for continued success",
+            "Surround yourself with supportive people", "Express appreciation to others",
+            "Set daily goals", "Create a to-do list for tomorrow",
+            "Start a new project", "Seek inspiration from successful individuals",
+            "Express your love to those close to you", "Spend quality time with family",
+            "Get more sleep", "Take short breaks throughout the day",
+            "Start with small tasks", "Set more achievable goals", "Set more challenging goals",
+            "Try something new", "Explore a hobby or interest",
+            "Practice patience", "Take time to cool off",
+            "Identify the source of frustration", "Seek solutions or alternatives",
+            "Practice deep breathing exercises", "Focus on the present moment",
+            "Challenge negative thoughts", "Practice self-compassion",
+            "Reach out to a trusted friend", "Engage in activities that uplift your mood",
+            "Rest and take care of your health", "Consult with a healthcare professional",
+            "Connect with friends or family", "Join social activities",
+            "Seek professional help if needed", "Engage in self-care practices",
+            "Channel anger into constructive activities", "Prioritize tasks and manage time effectively"
+    )
 }

@@ -421,9 +421,6 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
                     if (viewModel.validateFieldsScreen3()) {
                         viewModel.signUp()
 
-                        Toast.makeText(appContext, accountCreatedSuccessfully, Toast.LENGTH_SHORT)
-                            .show()
-
                         navController.navigate("journal") {
                             popUpTo("auth") {
                                 inclusive = true

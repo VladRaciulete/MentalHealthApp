@@ -1,12 +1,16 @@
 package com.example.mentalhealth.di
 
+import android.content.Context
 import com.example.mentalhealth.data.datasource.FirestoreDataSource
+import com.example.mentalhealth.data.ml.AssetModelLoader
 import com.example.mentalhealth.data.repository.AuthenticationRepositoryImpl
 import com.example.mentalhealth.data.repository.JournalRepositoryImpl
 import com.example.mentalhealth.data.repository.ProfileRepositoryImpl
+import com.example.mentalhealth.data.repository.RecommendationsRepositoryImpl
 import com.example.mentalhealth.domain.repository.AuthenticationRepository
 import com.example.mentalhealth.domain.repository.JournalRepository
 import com.example.mentalhealth.domain.repository.ProfileRepository
+import com.example.mentalhealth.domain.repository.RecommendationsRepository
 import com.example.mentalhealth.domain.usecase.auth.CheckUserAuthenticatedUseCase
 import com.example.mentalhealth.domain.usecase.auth.LogInUseCase
 import com.example.mentalhealth.domain.usecase.profile.LogOutUseCase
@@ -14,14 +18,19 @@ import com.example.mentalhealth.domain.usecase.auth.SignUpUseCase
 import com.example.mentalhealth.domain.usecase.journal.AddEveningJournalEntryUseCase
 import com.example.mentalhealth.domain.usecase.journal.AddMorningJournalEntryUseCase
 import com.example.mentalhealth.domain.usecase.journal.GetJournalEntryUseCase
+import com.example.mentalhealth.domain.usecase.journal.MLPredictionUseCase
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
+import com.example.mentalhealth.domain.usecase.recommendations.GetMLOutputUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import org.tensorflow.lite.Interpreter
+import java.nio.MappedByteBuffer
 import javax.inject.Singleton
 
 @Module
@@ -56,9 +65,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideJournalRepository(
-        dataSource: FirestoreDataSource
+        dataSource: FirestoreDataSource,
+        modelBuffer: MappedByteBuffer
     ): JournalRepository {
-        return JournalRepositoryImpl(dataSource)
+        return JournalRepositoryImpl(dataSource, Interpreter(modelBuffer))
     }
 
     @Provides
@@ -67,6 +77,14 @@ object AppModule {
         dataSource: FirestoreDataSource
     ): ProfileRepository {
         return ProfileRepositoryImpl(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRecommendationsRepository(
+        dataSource: FirestoreDataSource
+    ): RecommendationsRepository {
+        return RecommendationsRepositoryImpl(dataSource)
     }
 
     @Provides
@@ -123,5 +141,23 @@ object AppModule {
         return GetJournalEntryUseCase(journalRepository)
     }
 
+    @Provides
+    @Singleton
+    fun provideMLPredictionUseCase(journalRepository: JournalRepository): MLPredictionUseCase {
+        return MLPredictionUseCase(journalRepository)
+    }
 
+    @Provides
+    @Singleton
+    fun provideGetMLOutputUseCase(recommendationsRepository: RecommendationsRepository): GetMLOutputUseCase {
+        return GetMLOutputUseCase(recommendationsRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMLLoader(
+        @ApplicationContext context: Context
+    ): MappedByteBuffer {
+        return AssetModelLoader("testModel.tflite").loadModel(context)
+    }
 }
