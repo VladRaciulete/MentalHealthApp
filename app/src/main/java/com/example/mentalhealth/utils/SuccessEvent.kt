@@ -7,4 +7,5 @@ object SuccessEvent {
     const val JOURNAL_ENTRY_ADDED = "Journal entry added!"
     const val ML_ENTRY_ADDED = "ML entry added!"
     const val ML_DATA_LOADED = "ML data loaded!"
+    const val USER_DATA_UPDATED = "Used data updated!"
 }

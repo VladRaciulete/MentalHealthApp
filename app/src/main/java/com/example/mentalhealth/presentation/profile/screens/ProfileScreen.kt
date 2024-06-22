@@ -25,11 +25,9 @@ import androidx.navigation.NavController
 import com.example.mentalhealth.presentation.bottomMenu.BottomMenu
 import com.example.mentalhealth.R
 import com.example.mentalhealth.presentation.profile.SettingsItem
-import com.example.mentalhealth.presentation.CustomProgressIndicator
 import com.example.mentalhealth.presentation.profile.viewmodels.ProfileViewModel
 import com.example.mentalhealth.ui.theme.*
 import com.example.mentalhealth.utils.Constants
-import com.example.mentalhealth.utils.UiState
 
 @Composable
 fun ProfileScreen(
@@ -59,7 +57,7 @@ fun ProfileScreen(
                     .padding(vertical = 20.dp)
             ) {
                 Text(
-                    text = viewModel.currentUserData.value.firstName + " " + viewModel.currentUserData.value.lastName,
+                    text = viewModel.firstName.value + " " + viewModel.lastName.value,
                     color = TextWhiteColor,
                     fontSize = 20.sp
                 )

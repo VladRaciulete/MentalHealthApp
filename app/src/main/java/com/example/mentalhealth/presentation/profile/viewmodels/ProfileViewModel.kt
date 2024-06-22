@@ -9,8 +9,10 @@ import com.example.mentalhealth.presentation.profile.SettingsItem
 import com.example.mentalhealth.domain.model.User
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.domain.usecase.profile.LogOutUseCase
+import com.example.mentalhealth.domain.usecase.profile.UpdateUserDataUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,13 +22,28 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     val logOutUseCase: LogOutUseCase,
     val loadUserDataUseCase: LoadUserDataUseCase,
+    val updateUserDataUseCase: UpdateUserDataUseCase,
     val appStateViewModel: AppStateViewModel
 ) : ViewModel() {
-    var currentUserData = mutableStateOf(User())
+    var firstName = mutableStateOf("")
+    var lastName = mutableStateOf("")
+    var birthDate = mutableStateOf("")
+    var gender = mutableStateOf("")
+    var studies = mutableStateOf("")
+    var occupation = mutableStateOf("")
+    var maritalStatus = mutableStateOf("")
+    var livingArea = mutableStateOf("")
+    var publicFigure = mutableStateOf("")
 
-    init {
-        //loadUserData()
-    }
+    var firstNameShowError = mutableStateOf(false)
+    var lastNameShowError = mutableStateOf(false)
+    var birthDateShowError = mutableStateOf(false)
+    var genderShowError = mutableStateOf(false)
+    var studiesShowError = mutableStateOf(false)
+    var occupationShowError = mutableStateOf(false)
+    var maritalStatusShowError = mutableStateOf(false)
+    var livingAreaShowError = mutableStateOf(false)
+    var publicFigureShowError = mutableStateOf(false)
 
     fun logOut() {
         viewModelScope.launch {
@@ -34,12 +51,11 @@ class ProfileViewModel @Inject constructor(
                 appStateViewModel.uiState.value = UiState.Loading
                 val logOutResult = logOutUseCase()
 
-                if(logOutResult.isSuccess){
+                if (logOutResult.isSuccess) {
                     appStateViewModel.authState.value = AuthState.Unauthenticated
                     appStateViewModel.uiState.value = UiState.Idle
-                    currentUserData.value = User()
-                }
-                else {
+                    resetViewModelFields()
+                } else {
                     appStateViewModel.uiState.value = UiState.Error("Logout failed")
                 }
             } catch (e: Exception) {
@@ -52,15 +68,66 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val user = loadUserDataUseCase()
-                if (user != null){
-                    currentUserData.value = user
-                }
-                else {
+
+                if (user != null) {
+                    firstName.value = user.firstName
+                    lastName.value = user.lastName
+                    birthDate.value = user.birthDate
+                    gender.value = user.gender
+                    studies.value = user.studies
+                    occupation.value = user.occupation
+                    maritalStatus.value = user.maritalStatus
+                    livingArea.value = user.livingArea
+                    publicFigure.value = user.publicFigure
                 }
             } catch (e: Exception) {
-                appStateViewModel.uiState.value = UiState.Error(e.message ?: "User data loading error")
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: "User data loading error")
             }
         }
+    }
+
+    fun updateUserData() {
+        viewModelScope.launch {
+            try {
+                val result = updateUserDataUseCase(
+                    User(
+                        firstName.value,
+                        lastName.value,
+                        birthDate.value,
+                        gender.value,
+                        studies.value,
+                        occupation.value,
+                        maritalStatus.value,
+                        livingArea.value,
+                        publicFigure.value
+                    )
+                )
+
+                appStateViewModel.uiState.value =
+                    if (result.isSuccess)
+                        UiState.Success(SuccessEvent.USER_DATA_UPDATED)
+                    else
+                        UiState.Error(result.exceptionOrNull()?.message ?: "User Data Update Error")
+
+                resetViewModelFields()
+            } catch (e: Exception) {
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: "User Data Update Error")
+            }
+        }
+    }
+
+    private fun resetViewModelFields() {
+        firstName.value = ""
+        lastName.value = ""
+        birthDate.value = ""
+        gender.value = ""
+        studies.value = ""
+        occupation.value = ""
+        maritalStatus.value = ""
+        livingArea.value = ""
+        publicFigure.value = ""
     }
 }
 

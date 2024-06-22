@@ -161,7 +161,6 @@ class FirestoreDataSource @Inject constructor(
 
                 Result.success(Unit)
             } catch (e: Exception) {
-                println("Catch firestore ${e.message}")
                 Result.failure(e)
             }
         } else {
@@ -193,6 +192,25 @@ class FirestoreDataSource @Inject constructor(
             }
         } else {
             null
+        }
+    }
+
+    suspend fun updateUserData(userData: User): Result<Unit> {
+        val currentUser = auth.currentUser
+
+        return if (currentUser != null) {
+            try {
+                firestore.collection("users")
+                    .document(currentUser.uid)
+                    .set(userData, SetOptions.merge())
+                    .await()
+
+                Result.success(Unit)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        } else {
+            Result.failure(Exception("Current user is null"))
         }
     }
 }

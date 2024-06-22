@@ -52,7 +52,7 @@ fun JournalScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(AccentColor)
-                    .padding(vertical = 20.dp)
+                    .padding(vertical = 16.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back_arrow),

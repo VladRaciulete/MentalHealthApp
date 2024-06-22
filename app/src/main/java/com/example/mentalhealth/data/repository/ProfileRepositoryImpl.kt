@@ -14,4 +14,8 @@ class ProfileRepositoryImpl @Inject constructor(
     override suspend fun loadUserDataFromFireStore(): User? {
         return dataSource.loadUserDataFromFireStore()
     }
+
+    override suspend fun updateUserData(user: User): Result<Unit> {
+        return dataSource.updateUserData(user)
+    }
 }

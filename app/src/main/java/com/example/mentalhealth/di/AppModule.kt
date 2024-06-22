@@ -20,6 +20,7 @@ import com.example.mentalhealth.domain.usecase.journal.AddMorningJournalEntryUse
 import com.example.mentalhealth.domain.usecase.journal.GetJournalEntryUseCase
 import com.example.mentalhealth.domain.usecase.journal.MLPredictionUseCase
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
+import com.example.mentalhealth.domain.usecase.profile.UpdateUserDataUseCase
 import com.example.mentalhealth.domain.usecase.recommendations.GetMLOutputUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -109,6 +110,12 @@ object AppModule {
     @Singleton
     fun provideLoadUserDataUseCase(profileRepository: ProfileRepository): LoadUserDataUseCase {
         return LoadUserDataUseCase(profileRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateUserDataUseCase(profileRepository: ProfileRepository): UpdateUserDataUseCase {
+        return UpdateUserDataUseCase(profileRepository)
     }
 
     @Provides
