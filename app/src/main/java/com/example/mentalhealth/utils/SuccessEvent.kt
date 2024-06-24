@@ -8,6 +8,7 @@ object SuccessEvent {
     const val USER_ACCOUNT_UPDATED = "Used account updated!"
     const val JOURNAL_DATA_ADDED = "Journal data added!"
     const val JOURNAL_DATA_LOADED = "Journal data loaded!"
+    const val JOURNAL_ENTRIES_LOADED = "Journal entries loaded!"
     const val ML_DATA_ADDED = "ML data added!"
     const val ML_DATA_LOADED = "ML data loaded!"
 }

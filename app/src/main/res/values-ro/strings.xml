@@ -30,6 +30,7 @@
     <string name="log_out">Deconecteaza-te</string>
     <string name="done">Gata</string>
     <string name="cancel">Anuleaza</string>
+    <string name="journal">Jurnal</string>
     <string name="morning_journal">Jurnal de dimineata</string>
     <string name="evening_journal">Jurnal de seara</string>
     <string name="how_many_hours_did_you_sleep">Cate ore ai dormit?</string>
@@ -44,7 +45,7 @@
     <string name="how_did_you_feel_today">Cum te-ai simtit astazi?</string>
     <string name="today_you_felt">Astazi te-ai simtit</string>
     <string name="stress_level">Nivelul stresului</string>
-    <string name="water_intake">Consumul de apa</string>
+    <string name="water_intake">Nivelul de hidratare</string>
     <string name="energy_level">Nivelul de energie</string>
     <string name="love_level">Nivelul de iubire</string>
     <string name="how_was_today">Cum a fost ziua de azi?</string>
@@ -65,4 +66,17 @@
     <string name="type_your_studies">Introdu studiile</string>
     <string name="type_your_occupation">Introdu ocupatia</string>
     <string name="pick_your_birthdate">Alege data de nastere</string>
+    <string name="predicted_mood">Starea de spirit prezisa</string>
+    <string name="recommendations">Recomdandari</string>
+    <string name="statistics">Statistici</string>
+    <string name="average_wake_up_time">Ora medie de trezire</string>
+    <string name="average_hours_slept">Numarul mediu de ore de somn</string>
+    <string name="average_day_rating">Nota medie a zilei</string>
+    <string name="average_goal_progress">Progresul mediu al obiectivelor</string>
+    <string name="your_daily_moods">Starea de spirit zilnica</string>
+    <string name="average_stress_level">Nivelul mediu de stres</string>
+    <string name="average_water_intake">Nivelul mediu de hidratare</string>
+    <string name="average_energy_level">Nivelul mediu de energie</string>
+    <string name="average_love_level">Nivelul mediu de iubire</string>
+    <string name="your_daily_feelings">Sentimentele zilnice</string>
 </resources>

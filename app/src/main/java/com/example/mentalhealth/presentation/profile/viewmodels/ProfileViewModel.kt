@@ -43,6 +43,10 @@ class ProfileViewModel @Inject constructor(
     var livingAreaShowError = mutableStateOf(false)
     var publicFigureShowError = mutableStateOf(false)
 
+    init {
+        loadUserData()
+    }
+
     fun logOut() {
         viewModelScope.launch {
             try {

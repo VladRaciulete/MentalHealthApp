@@ -52,6 +52,7 @@ val JournalEntryBackgroundColor2 = Color(0xFF05113C)
 
 val UncheckedTrackColor = Color(0xFF030B29)
 val AccentColor = Color(0xFF3E47B8)
+val AccentColor2 = Color(0xFF151A68)
 val TextFieldBackgroundColor = Color(0xFF07164D)
 
 val ErrorTextColor = Color(0xFFB32B2B)

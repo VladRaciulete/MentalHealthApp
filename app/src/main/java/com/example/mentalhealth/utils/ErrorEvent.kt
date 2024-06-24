@@ -9,6 +9,7 @@ object ErrorEvent {
     const val ERROR_UPDATING_USER_DATA = "Error while updating user data!"
     const val ERROR_ADDING_JOURNAL_DATA = "Error while adding journal entry!"
     const val ERROR_RETRIEVING_JOURNAL_DATA = "Error while retrieving journal entry!"
+    const val ERROR_RETRIEVING_JOURNAL_ENTRIES = "Error while retrieving journal entries!"
     const val ERROR_ADDING_ML_DATA = "Error while adding ML entry!"
     const val ERROR_RETRIEVING_ML_DATA = "Error while retrieving ML entry!"
 }

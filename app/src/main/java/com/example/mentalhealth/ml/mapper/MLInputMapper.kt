@@ -46,7 +46,7 @@ class MLInputMapper {
     }
 
     private fun mapBirthDate(dateString: String): Int {
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formatter = DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT)
         val birthDate = LocalDate.parse(dateString, formatter)
         val currentDate = LocalDate.now()
 

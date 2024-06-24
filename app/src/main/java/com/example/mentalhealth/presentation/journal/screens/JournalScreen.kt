@@ -52,7 +52,7 @@ fun JournalScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(AccentColor)
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 8.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back_arrow),
@@ -67,6 +67,7 @@ fun JournalScreen(
                 )
 
                 JournalDatePicker(
+                    text = stringResource(id = R.string.journal),
                     viewModel.date.value
                 ) { newDate ->
                     viewModel.date.value = newDate
@@ -167,7 +168,7 @@ fun JournalScreen(
                                     color = TextWhiteColor
                                 )
 
-                                viewModel.dailyGoals.value.forEach { goal->
+                                viewModel.dailyGoals.value.forEach { goal ->
                                     Text(
                                         text = goal.description,
                                         color = TextWhiteColor,
@@ -222,7 +223,7 @@ fun JournalScreen(
                                     color = TextWhiteColor
                                 )
 
-                                viewModel.dailyGoals.value.forEach { goal->
+                                viewModel.dailyGoals.value.forEach { goal ->
                                     Text(
                                         text = "${goal.description} - ${goal.progress}%",
                                         color = TextWhiteColor,
@@ -337,7 +338,9 @@ fun JournalScreen(
                                             color = TextWhiteColor
                                         )
                                         Text(
-                                            text = if (asd.value) stringResource(id = R.string.yes) else stringResource(id = R.string.no),
+                                            text = if (asd.value) stringResource(id = R.string.yes) else stringResource(
+                                                id = R.string.no
+                                            ),
                                             color = TextWhiteColor
                                         )
                                     }

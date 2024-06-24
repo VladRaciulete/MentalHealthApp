@@ -3,8 +3,8 @@ package com.example.mentalhealth.data.datasource
 import com.example.mentalhealth.domain.model.DailyJournal
 import com.example.mentalhealth.domain.model.MLOutput
 import com.example.mentalhealth.domain.model.User
-import com.example.mentalhealth.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
@@ -74,6 +74,36 @@ class FirestoreDataSource @Inject constructor(
                 null
             }
         } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun getJournalEntriesFromDateRange(
+        startDate: String,
+        endDate: String
+    ): List<DailyJournal>? {
+        val currentUser = auth.currentUser
+
+        return if (currentUser != null) {
+            try {
+                val result = firestore.collection("users")
+                    .document(currentUser.uid)
+                    .collection("dailyJournal")
+                    .orderBy(FieldPath.documentId())
+                    .startAt(startDate)
+                    .endAt(endDate)
+                    .get()
+                    .await()
+
+                val items = result.toObjects(DailyJournal::class.java)
+
+                items.ifEmpty {
+                    null
+                }
+            } catch (e: Exception) {
+                null
+            }
+        } else {
             null
         }
     }

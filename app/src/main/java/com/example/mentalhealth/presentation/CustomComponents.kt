@@ -141,7 +141,7 @@ fun CustomDatePicker(
 
     val mCalendar = Calendar.getInstance()
 
-    var dateSplit = selectedDate.value.split("-")
+    val dateSplit = selectedDate.value.split("-")
 
     if (dateSplit.size > 2) {
         mYear = dateSplit[2].toInt()
@@ -212,6 +212,7 @@ fun CustomProgressIndicator() {
 
 @Composable
 fun JournalDatePicker(
+    text: String,
     date: String,
     onDateSelected: (String) -> Unit,
 ) {
@@ -258,6 +259,11 @@ fun JournalDatePicker(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
+                text = text,
+                color = TextWhiteColor,
+                fontSize = 20.sp
+            )
+            Text(
                 text = formatDate(date),
                 color = TextWhiteColor,
                 modifier = Modifier
@@ -271,14 +277,14 @@ fun JournalDatePicker(
 
 fun convertToDate(year: Int, month: Int, day: Int): String {
     val calendar = Calendar.getInstance().apply { set(year, month, day) }
-    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val dateFormat = SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault())
     return dateFormat.format(calendar.time)
 }
 
 fun formatDate(dateString: String): String {
-    val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+    val todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT))
 
-    val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val inputFormat = SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault())
     val outputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
     val todayFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
 
@@ -840,6 +846,119 @@ fun CustomAutocompleteField(
                         isExpanded = false
                     }
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomTimeRangePicker(
+    state: MutableState<String>,
+    list: List<String>,
+    onItemSelected: (String) -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
+                .background(
+                    color = AccentColor2,
+                    shape = RoundedCornerShape(20.dp)
+                )
+        ) {
+            for (item in list) {
+                Box(
+                    modifier = Modifier
+                        .padding(vertical = 5.dp)
+                        .background(
+                            if (state.value == item) AccentColor else Color.Transparent,
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .clickable {
+                            state.value = item
+                            onItemSelected(item)
+                        }
+                ) {
+                    Text(
+                        text = item,
+                        color = TextWhiteColor,
+                        modifier = Modifier.padding(vertical = 5.dp, horizontal = 16.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomPercentageComponent(
+    title: String,
+    items: Map<String,Int>
+){
+    var totalValue = 0
+    for (item in items) {
+        totalValue += item.value
+    }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .background(JournalEntryBackgroundColor2)
+            .fillMaxWidth()
+            .padding(vertical = 10.dp)
+    ) {
+        Text(
+            text = title,
+            color = TextWhiteColor,
+            fontSize = 20.sp
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        for (item in items) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(vertical = 5.dp)
+            ) {
+                val fraction = (item.value.toDouble() / totalValue).toFloat()
+
+                Text(
+                    text = item.key,
+                    color = TextWhiteColor
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = AccentColor2,
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                        .align(Alignment.Start)
+                ){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(fraction)
+                            .padding(2.dp)
+                            .background(
+                                color = AccentColor,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                    ){
+                        Text(text = "")
+                    }
+                }
             }
         }
     }

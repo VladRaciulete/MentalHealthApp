@@ -24,7 +24,7 @@ class RecommendationsViewModel @Inject constructor(
     val getMLOutputUseCase: GetMLOutputUseCase,
     val appStateViewModel: AppStateViewModel
 ) : ViewModel() {
-    var date = mutableStateOf(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+    var date = mutableStateOf(LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT)))
     var moodPrediction = mutableStateOf("")
     var recommendation1 = mutableStateOf("")
     var recommendation2 = mutableStateOf("")
@@ -75,28 +75,28 @@ class RecommendationsViewModel @Inject constructor(
     }
 
     fun resetViewModelDate() {
-        date.value = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        date.value = LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT))
     }
 
-    fun formatDate(inputDate: String): Date {
-        return SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(inputDate) ?: Date()
+    private fun formatDate(inputDate: String): Date {
+        return SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault()).parse(inputDate) ?: Date()
     }
 
-    fun formatDateString(date: Date): String {
-        return SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date)
+    private fun formatDateString(date: Date): String {
+        return SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault()).format(date)
     }
 
     fun incrementDate() {
         val calendar = Calendar.getInstance()
         calendar.time = formatDate(date.value)
-        calendar.add(Calendar.DAY_OF_YEAR, 1) // Increment by one day
+        calendar.add(Calendar.DAY_OF_YEAR, 1)
         date.value = formatDateString(calendar.time)
     }
 
     fun decrementDate() {
         val calendar = Calendar.getInstance()
         calendar.time = formatDate(date.value)
-        calendar.add(Calendar.DAY_OF_YEAR, -1) // Decrement by one day
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
         date.value = formatDateString(calendar.time)
     }
 }

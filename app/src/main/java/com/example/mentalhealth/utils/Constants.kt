@@ -29,6 +29,8 @@ object Constants {
         )
     )
 
+    const val APP_DATE_FORMAT = "yyyy-MM-dd"
+
     val studiesList = listOf(
         "Accounting", "Agriculture", "Anthropology", "Architecture", "Art", "Biology",
         "Business Administration", "Chemistry", "Computer Science", "Criminal Justice",
@@ -85,7 +87,7 @@ object Constants {
         "Did light physical activity", "Watched a comedy show", "Explored spirituality"
     )
 
-    val dayFeeling = listOf("Very bad", "Bad", "decent", "Good", "Very good")
+    val dayFeeling = listOf("Very bad", "Bad", "Decent", "Good", "Very good")
 
     val personalizedRecommendations = listOf(
             "Try to have 7-9 hours of sleep", "Try to maintain a consistent sleep schedule",
@@ -117,5 +119,13 @@ object Constants {
             "Connect with friends or family", "Join social activities",
             "Seek professional help if needed", "Engage in self-care practices",
             "Channel anger into constructive activities", "Prioritize tasks and manage time effectively"
+    )
+
+    val statisticsTimeRangeList = listOf("Last Week", "Last Month", "Last 90 Days")
+
+    val statisticsTimeRangeMap = mapOf(
+        "Last Week" to 7,
+        "Last Month" to 30,
+        "Last 90 Days" to 90
     )
 }

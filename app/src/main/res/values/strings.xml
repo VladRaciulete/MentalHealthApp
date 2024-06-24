@@ -29,6 +29,7 @@
     <string name="log_out">Log out</string>
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
+    <string name="journal">Journal</string>
     <string name="morning_journal">Morning journal</string>
     <string name="evening_journal">Evening journal</string>
     <string name="how_many_hours_did_you_sleep">How many hours did you sleep?</string>
@@ -64,4 +65,17 @@
     <string name="type_your_studies">Type your studies</string>
     <string name="type_your_occupation">Type your occupation</string>
     <string name="pick_your_birthdate">Pick your birthdate</string>
+    <string name="predicted_mood">Predicted mood</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="statistics">Statistics</string>
+    <string name="average_wake_up_time">Average wake-up time</string>
+    <string name="average_hours_slept">Average hours slept</string>
+    <string name="average_day_rating">Average day rating</string>
+    <string name="average_goal_progress">Average goal progress</string>
+    <string name="your_daily_moods">Your daily moods</string>
+    <string name="average_stress_level">Average stress level</string>
+    <string name="average_water_intake">Average water intake</string>
+    <string name="average_energy_level">Average energy level</string>
+    <string name="average_love_level">Average love level</string>
+    <string name="your_daily_feelings">Your daily feelings</string>
 </resources>

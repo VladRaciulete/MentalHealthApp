@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -50,7 +51,7 @@ fun RecommendationsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(AccentColor)
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 8.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_back_arrow),
@@ -65,6 +66,7 @@ fun RecommendationsScreen(
                 )
 
                 JournalDatePicker(
+                    text = stringResource(id = R.string.recommendations),
                     viewModel.date.value
                 ) { newDate ->
                     viewModel.date.value = newDate
@@ -92,7 +94,7 @@ fun RecommendationsScreen(
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Text(
-                    text = "Predicted mood:",
+                    text = stringResource(id = R.string.predicted_mood) + ":",
                     color = TextWhiteColor,
                     fontSize = 20.sp
                 )
@@ -108,7 +110,7 @@ fun RecommendationsScreen(
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Text(
-                    text = "Recommendations:",
+                    text = stringResource(id = R.string.recommendations) + ":",
                     color = TextWhiteColor,
                     fontSize = 20.sp
                 )

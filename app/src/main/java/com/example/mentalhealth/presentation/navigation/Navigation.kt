@@ -27,6 +27,8 @@ import com.example.mentalhealth.presentation.profile.screens.NotificationsSettin
 import com.example.mentalhealth.presentation.profile.screens.ProfileScreen
 import com.example.mentalhealth.presentation.recommendations.screens.RecommendationsScreen
 import com.example.mentalhealth.presentation.recommendations.viewmodels.RecommendationsViewModel
+import com.example.mentalhealth.presentation.statistics.screens.StatisticsScreen
+import com.example.mentalhealth.presentation.statistics.viewmodels.StatisticsViewModel
 import com.example.mentalhealth.utils.AuthState
 
 @Composable
@@ -37,6 +39,7 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
     val profileViewModel: ProfileViewModel = hiltViewModel()
     val journalViewModel: JournalViewModel = hiltViewModel()
     val recommendationsViewModel: RecommendationsViewModel = hiltViewModel()
+    val statisticsViewModel: StatisticsViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -86,7 +89,7 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
             }
 
             composable(route = Screen.StatisticsScreen.route) {
-                StatisticsScreen(navController = navController)
+                StatisticsScreen(navController = navController, viewModel = statisticsViewModel)
             }
 
             composable(route = Screen.RecommendationsScreen.route) {
@@ -120,6 +123,7 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
             journalViewModel.resetViewModelFields()
             recommendationsViewModel.resetViewModelFields()
             profileViewModel.resetViewModelFields()
+            statisticsViewModel.resetViewModelFields()
             journalViewModel.resetViewModelDate()
             recommendationsViewModel.resetViewModelDate()
         }
@@ -130,6 +134,7 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
             journalViewModel.resetViewModelFields()
             recommendationsViewModel.resetViewModelFields()
             profileViewModel.resetViewModelFields()
+            statisticsViewModel.resetViewModelFields()
             journalViewModel.resetViewModelDate()
             recommendationsViewModel.resetViewModelDate()
         }

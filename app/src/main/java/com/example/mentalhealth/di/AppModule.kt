@@ -7,10 +7,12 @@ import com.example.mentalhealth.data.repository.AuthenticationRepositoryImpl
 import com.example.mentalhealth.data.repository.JournalRepositoryImpl
 import com.example.mentalhealth.data.repository.ProfileRepositoryImpl
 import com.example.mentalhealth.data.repository.RecommendationsRepositoryImpl
+import com.example.mentalhealth.data.repository.StatisticsRepositoryImpl
 import com.example.mentalhealth.domain.repository.AuthenticationRepository
 import com.example.mentalhealth.domain.repository.JournalRepository
 import com.example.mentalhealth.domain.repository.ProfileRepository
 import com.example.mentalhealth.domain.repository.RecommendationsRepository
+import com.example.mentalhealth.domain.repository.StatisticsRepository
 import com.example.mentalhealth.domain.usecase.auth.CheckUserAuthenticatedUseCase
 import com.example.mentalhealth.domain.usecase.auth.LogInUseCase
 import com.example.mentalhealth.domain.usecase.profile.LogOutUseCase
@@ -22,6 +24,7 @@ import com.example.mentalhealth.domain.usecase.journal.MLPredictionUseCase
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.domain.usecase.profile.UpdateUserDataUseCase
 import com.example.mentalhealth.domain.usecase.recommendations.GetMLOutputUseCase
+import com.example.mentalhealth.domain.usecase.statistics.GetJournalEntriesFromDateRangeUseCase
 import com.example.mentalhealth.presentation.AppStateViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -86,6 +89,14 @@ object AppModule {
         dataSource: FirestoreDataSource
     ): RecommendationsRepository {
         return RecommendationsRepositoryImpl(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatisticsRepository(
+        dataSource: FirestoreDataSource
+    ): StatisticsRepository {
+        return StatisticsRepositoryImpl(dataSource)
     }
 
     @Provides
@@ -158,6 +169,12 @@ object AppModule {
     @Singleton
     fun provideGetMLOutputUseCase(recommendationsRepository: RecommendationsRepository): GetMLOutputUseCase {
         return GetMLOutputUseCase(recommendationsRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetJournalEntriesFromDateRangeUseCase(statisticsRepository: StatisticsRepository): GetJournalEntriesFromDateRangeUseCase {
+        return GetJournalEntriesFromDateRangeUseCase(statisticsRepository)
     }
 
     @Provides

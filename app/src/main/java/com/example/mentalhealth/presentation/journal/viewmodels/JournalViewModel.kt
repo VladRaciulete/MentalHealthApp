@@ -13,6 +13,7 @@ import com.example.mentalhealth.domain.usecase.journal.MLPredictionUseCase
 import com.example.mentalhealth.domain.usecase.profile.LoadUserDataUseCase
 import com.example.mentalhealth.ml.mapper.MLInputMapper
 import com.example.mentalhealth.presentation.AppStateViewModel
+import com.example.mentalhealth.utils.Constants
 import com.example.mentalhealth.utils.ErrorEvent
 import com.example.mentalhealth.utils.SuccessEvent
 import com.example.mentalhealth.utils.UiState
@@ -62,7 +63,7 @@ class JournalViewModel @Inject constructor(
     var dayFeeling = mutableStateOf("")
     var whatCanIDoToMakeTomorrowBetter = mutableStateOf("")
     var timeStamp = mutableStateOf(System.currentTimeMillis())
-    var date = mutableStateOf(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+    var date = mutableStateOf(LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT)))
     var morningCheckIn = mutableStateOf(false)
     var eveningCheckIn = mutableStateOf(false)
 
@@ -296,56 +297,28 @@ class JournalViewModel @Inject constructor(
     }
 
     fun resetViewModelDate() {
-        date.value = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        date.value = LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT))
     }
 
-    fun printAllData() {
-        resetViewModelFields()
-        getJournalEntry()
-        println("=================================================")
-        println("morningCheckIn : ${morningCheckIn.value}")
-        println("eveningCheckIn : ${eveningCheckIn.value}")
-        println("wakeUpTime : ${wakeUpTime.value}")
-        println("hoursSlept : ${hoursSlept.value}")
-        println("dailyGoals : ${dailyGoals.value}")
-        println("todayIAmGratefulFor : ${todayIAmGratefulFor.value}")
-        println("todayIFelt : ${todayIFelt.value}")
-        println("stressLevel : ${stressLevel.value}")
-        println("waterIntake : ${waterIntake.value}")
-        println("energyLevel : ${energyLevel.value}")
-        println("loveLevel : ${loveLevel.value}")
-        println("didIHaveEnough : ${didIHaveEnough.value}")
-        println("whatWentWell : ${whatWentWell.value}")
-        println("whatWentBad : ${whatWentBad.value}")
-        println("whatDidIDoToTakeCareOfMyself : ${whatDidIDoToTakeCareOfMyself.value}")
-        println("bestMomentOfTheDay : ${bestMomentOfTheDay.value}")
-        println("dayRating : ${dayRating.value}")
-        println("dayFeeling : ${dayFeeling.value}")
-        println("whatCanIDoToMakeTomorrowBetter : ${whatCanIDoToMakeTomorrowBetter.value}")
-        println("timeStamp : ${timeStamp.value}")
-        println("date : ${date.value}")
-        println("=================================================")
+    private fun formatDate(inputDate: String): Date {
+        return SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault()).parse(inputDate) ?: Date()
     }
 
-    fun formatDate(inputDate: String): Date {
-        return SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(inputDate) ?: Date()
-    }
-
-    fun formatDateString(date: Date): String {
-        return SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date)
+    private fun formatDateString(date: Date): String {
+        return SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault()).format(date)
     }
 
     fun incrementDate() {
         val calendar = Calendar.getInstance()
         calendar.time = formatDate(date.value)
-        calendar.add(Calendar.DAY_OF_YEAR, 1) // Increment by one day
+        calendar.add(Calendar.DAY_OF_YEAR, 1)
         date.value = formatDateString(calendar.time)
     }
 
     fun decrementDate() {
         val calendar = Calendar.getInstance()
         calendar.time = formatDate(date.value)
-        calendar.add(Calendar.DAY_OF_YEAR, -1) // Decrement by one day
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
         date.value = formatDateString(calendar.time)
     }
 }
