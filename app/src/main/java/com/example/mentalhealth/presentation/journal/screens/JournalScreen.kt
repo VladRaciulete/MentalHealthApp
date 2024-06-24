@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mentalhealth.R
+import com.example.mentalhealth.presentation.CustomSpacerBorder
 import com.example.mentalhealth.presentation.JournalDatePicker
 import com.example.mentalhealth.presentation.bottomMenu.BottomMenu
 import com.example.mentalhealth.presentation.journal.viewmodels.JournalViewModel
@@ -124,42 +125,31 @@ fun JournalScreen(
                         }
                     }
 
+                    CustomSpacerBorder(0, 20, FocusedBorderColor)
+
                     LazyColumn(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         item {
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.wake_up_time) + ": " + viewModel.wakeUpTime.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            Text(
+                                text = stringResource(id = R.string.wake_up_time) + ": " + viewModel.wakeUpTime.value,
+                                color = TextWhiteColor
+                            )
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.hours_slept) + ": " + viewModel.hoursSlept.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
+                            Text(
+                                text = stringResource(id = R.string.hours_slept) + ": " + viewModel.hoursSlept.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -185,36 +175,25 @@ fun JournalScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         item {
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.wake_up_time) + ": " + viewModel.wakeUpTime.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            Spacer(modifier = Modifier.height(20.dp))
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.hours_slept) + ": " + viewModel.hoursSlept.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            Text(
+                                text = stringResource(id = R.string.wake_up_time) + ": " + viewModel.wakeUpTime.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
+                            Text(
+                                text = stringResource(id = R.string.hours_slept) + ": " + viewModel.hoursSlept.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -232,10 +211,11 @@ fun JournalScreen(
                                 }
                             }
 
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -249,75 +229,46 @@ fun JournalScreen(
                                 )
                             }
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.today_you_felt) + ": " + viewModel.todayIFelt.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.stress_level) + ": " + viewModel.stressLevel.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            Text(
+                                text = stringResource(id = R.string.today_you_felt) + ": " + viewModel.todayIFelt.value,
+                                color = TextWhiteColor
+                            )
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.water_intake) + ": " + viewModel.waterIntake.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.energy_level) + ": " + viewModel.energyLevel.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            Text(
+                                text = stringResource(id = R.string.stress_level) + ": " + viewModel.stressLevel.value,
+                                color = TextWhiteColor
+                            )
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.love_level) + ": " + viewModel.loveLevel.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
+                            Text(
+                                text = stringResource(id = R.string.water_intake) + ": " + viewModel.waterIntake.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
+                            Text(
+                                text = stringResource(id = R.string.energy_level) + ": " + viewModel.energyLevel.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
+                            Text(
+                                text = stringResource(id = R.string.love_level) + ": " + viewModel.loveLevel.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -347,10 +298,11 @@ fun JournalScreen(
                                 }
                             }
 
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -364,10 +316,11 @@ fun JournalScreen(
                                 )
                             }
 
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -381,10 +334,11 @@ fun JournalScreen(
                                 )
                             }
 
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -398,11 +352,11 @@ fun JournalScreen(
                                 )
                             }
 
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {
@@ -416,36 +370,25 @@ fun JournalScreen(
                                 )
                             }
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.day_rating) + ": " + viewModel.dayRating.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .background(JournalEntryBackgroundColor2)
-                                    .fillMaxWidth()
-                                    .padding(vertical = 10.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.your_day_was) + ": " + viewModel.dayFeeling.value,
-                                    color = TextWhiteColor
-                                )
-                            }
+                            Text(
+                                text = stringResource(id = R.string.day_rating) + ": " + viewModel.dayRating.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
+
+                            Text(
+                                text = stringResource(id = R.string.your_day_was) + ": " + viewModel.dayFeeling.value,
+                                color = TextWhiteColor
+                            )
+
+                            CustomSpacerBorder(20, 20, FocusedBorderColor)
 
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
-                                    .background(JournalEntryBackgroundColor1)
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp)
                             ) {

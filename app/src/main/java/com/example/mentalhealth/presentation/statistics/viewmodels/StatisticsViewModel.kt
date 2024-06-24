@@ -74,10 +74,6 @@ class StatisticsViewModel @Inject constructor(
         val endDate = LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT))
         val startDate = getStartDate(endDate, days)
 
-        println("days: $days")
-        println("startDate: $startDate")
-        println("endDate: $endDate")
-
         getJournalEntries(startDate, endDate)
     }
 
