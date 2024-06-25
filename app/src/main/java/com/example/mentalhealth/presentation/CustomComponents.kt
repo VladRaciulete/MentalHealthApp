@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,12 +17,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -44,7 +50,9 @@ import com.example.mentalhealth.ui.theme.*
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -781,76 +789,6 @@ fun CustomDropDownMenu2(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CustomAutocompleteField(
-    label: String,
-    list: List<String>,
-    onItemSelected: (String) -> Unit,
-) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    var selectedItem by remember { mutableStateOf("") }
-    var filteredList by remember { mutableStateOf(list) }
-    var isExpanded by remember { mutableStateOf(false) }
-
-    Column {
-        OutlinedTextField(
-            value = selectedItem,
-            onValueChange = {
-                selectedItem = it
-                filteredList = filterList(it, list)
-                isExpanded = filteredList.isNotEmpty()
-            },
-            label = {
-                Text(
-                    text = label,
-                    color = UnfocusedTextWhiteColor
-                )
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Text
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    isExpanded = false
-                }
-            ),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = if (isExpanded) FocusedTextFieldColor else Color.Transparent,
-                disabledTextColor = if (isExpanded) FocusedTextFieldTextColor else UnfocusedTextFieldTextColor,
-                disabledBorderColor = if (isExpanded) FocusedBorderColor else UnfocusedBorderColor,
-                disabledLabelColor = if (isExpanded) FocusedLabelColor else UnfocusedLabelColor,
-                focusedTextColor = TextWhiteColor,
-                unfocusedTextColor = UnfocusedTextWhiteColor
-            )
-        )
-
-        DropdownMenu(
-            expanded = isExpanded,
-            onDismissRequest = { isExpanded = false },
-            modifier = Modifier
-                .background(TextFieldBackgroundColor)
-        ) {
-            filteredList.take(5).forEach { suggestion ->
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = suggestion,
-                            color = TextWhiteColor
-                        )
-                    },
-                    onClick = {
-                        selectedItem = suggestion
-                        onItemSelected(selectedItem)
-                        isExpanded = false
-                    }
-                )
-            }
-        }
-    }
-}
-
 @Composable
 fun CustomTimeRangePicker(
     state: MutableState<String>,
@@ -966,5 +904,124 @@ fun CustomPercentageComponent(
 
 private fun filterList(query: String, occupationsList: List<String>): List<String> {
     return occupationsList.filter { it.contains(query, ignoreCase = true) }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomAutoComplete(
+    label: String,
+    selectedItem: State<String>,
+    list: List<String>,
+    onItemSelected: (String) -> Unit,
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+
+    var textFieldWidth by remember { mutableStateOf(0.dp) }
+
+    val currentDensity = LocalDensity.current
+
+    Column(
+        modifier = Modifier
+            .clickable(
+                onClick = {
+                    isExpanded = false
+                }
+            )
+    ) {
+        Row {
+            OutlinedTextField(
+                label = {
+                    Text(text = label)
+                },
+                modifier = Modifier.onGloballyPositioned { coordinates ->
+                    textFieldWidth = with(currentDensity) { coordinates.size.width.toDp() }
+                },
+                value = selectedItem.value,
+                onValueChange = {
+                    onItemSelected(it)
+                    isExpanded = true
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = if (isExpanded) FocusedTextFieldColor else Color.Transparent,
+                    disabledTextColor = if (isExpanded) FocusedTextFieldTextColor else UnfocusedTextFieldTextColor,
+                    disabledBorderColor = if (isExpanded) FocusedBorderColor else UnfocusedBorderColor,
+                    disabledLabelColor = if (isExpanded) FocusedLabelColor else UnfocusedLabelColor,
+                    focusedTextColor = TextWhiteColor,
+                    unfocusedTextColor = UnfocusedTextWhiteColor
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                trailingIcon = {
+                    IconButton(onClick = { isExpanded = !isExpanded }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_down_arrow),
+                            modifier = Modifier.size(24.dp),
+                            contentDescription = "DownArrow",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+        }
+
+        AnimatedVisibility(
+            visible = isExpanded
+        ) {
+            Card(
+                modifier = Modifier.width(textFieldWidth),
+                shape = RoundedCornerShape(10.dp)
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .heightIn(max = 150.dp)
+                        .background(FocusedTextFieldColor)
+                ) {
+                    if (selectedItem.value.isNotEmpty()) {
+                        items(
+                            list.filter {
+                                it.lowercase()
+                                    .contains(selectedItem.value.lowercase()) || it.lowercase().contains("others")
+                            }
+                            .sorted()
+                        ) {
+                            AutoCompleteItem(title = it) { title ->
+                                isExpanded = false
+                                onItemSelected(title)
+                            }
+                        }
+                    } else {
+                        items(
+                            list.sorted()
+                        ) {
+                            AutoCompleteItem(title = it) { title ->
+                                isExpanded = false
+                                onItemSelected(title)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AutoCompleteItem(
+    title: String,
+    onSelect: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onSelect(title)
+            }
+            .padding(10.dp)
+    ) {
+        Text(text = title, fontSize = 16.sp)
+    }
 }
 

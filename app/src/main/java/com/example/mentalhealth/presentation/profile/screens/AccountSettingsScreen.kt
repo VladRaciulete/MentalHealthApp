@@ -13,11 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -25,9 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -35,10 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mentalhealth.R
-import com.example.mentalhealth.presentation.CustomAutocompleteField
+import com.example.mentalhealth.presentation.CustomAutoComplete
 import com.example.mentalhealth.presentation.CustomDatePicker
 import com.example.mentalhealth.presentation.CustomDropDownMenu
-import com.example.mentalhealth.presentation.JournalDatePicker
 import com.example.mentalhealth.presentation.profile.viewmodels.ProfileViewModel
 import com.example.mentalhealth.ui.theme.AccentColor
 import com.example.mentalhealth.ui.theme.BackgroundColor
@@ -191,9 +185,10 @@ fun AccountSettingsScreen(
 
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    CustomAutocompleteField(
-                        stringResource(id = R.string.type_your_studies),
-                        Constants.studiesList,
+                    CustomAutoComplete(
+                        label = stringResource(id = R.string.type_your_studies),
+                        list = Constants.studiesList,
+                        selectedItem = viewModel.studies,
                         onItemSelected = { selectedItem ->
                             viewModel.studies.value = selectedItem
                         }
@@ -201,9 +196,10 @@ fun AccountSettingsScreen(
 
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    CustomAutocompleteField(
-                        stringResource(id = R.string.type_your_occupation),
-                        Constants.occupationsList,
+                    CustomAutoComplete(
+                        label = stringResource(id = R.string.type_your_occupation),
+                        list = Constants.occupationsList,
+                        selectedItem = viewModel.occupation,
                         onItemSelected = { selectedItem ->
                             viewModel.occupation.value = selectedItem
                         }

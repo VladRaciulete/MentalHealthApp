@@ -35,7 +35,7 @@ import androidx.navigation.NavController
 import com.example.mentalhealth.presentation.CustomDatePicker
 import com.example.mentalhealth.presentation.CustomDropDownMenu
 import com.example.mentalhealth.R
-import com.example.mentalhealth.presentation.CustomAutocompleteField
+import com.example.mentalhealth.presentation.CustomAutoComplete
 import com.example.mentalhealth.utils.Validator
 import com.example.mentalhealth.presentation.navigation.Screen
 import com.example.mentalhealth.presentation.auth.viewmodels.SignUpViewModel
@@ -283,9 +283,10 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            CustomAutocompleteField(
-                stringResource(id = R.string.type_your_studies),
-                Constants.studiesList,
+            CustomAutoComplete(
+                label = stringResource(id = R.string.type_your_studies),
+                list = Constants.studiesList,
+                selectedItem = viewModel.studies,
                 onItemSelected = { selectedItem->
                     viewModel.studies.value = selectedItem
                 }
@@ -293,9 +294,10 @@ fun SignUpScreenStep2(navController: NavController, viewModel: SignUpViewModel) 
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            CustomAutocompleteField(
-                stringResource(id = R.string.type_your_occupation),
-                Constants.occupationsList,
+            CustomAutoComplete(
+                label = stringResource(id = R.string.type_your_occupation),
+                list = Constants.occupationsList,
+                selectedItem = viewModel.occupation,
                 onItemSelected = { selectedItem->
                     viewModel.occupation.value = selectedItem
                 }
@@ -412,9 +414,6 @@ fun SignUpScreenStep3(navController: NavController, viewModel: SignUpViewModel) 
             Spacer(modifier = Modifier.height(15.dp))
 
             val pleaseFillInTheFieldsText = stringResource(id = R.string.please_fill_in_the_fields)
-
-            val accountCreatedSuccessfully =
-                stringResource(id = R.string.account_created_successfully)
 
             Button(
                 onClick = {
