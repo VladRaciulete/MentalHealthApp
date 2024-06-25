@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -49,7 +48,12 @@ fun BottomMenu(
                 isSelected = index == selectedItemIndex,
             ) {
                 selectedItemIndex = index
-                navController.navigate(item.route)
+                val currentRoute = navController.currentBackStackEntry
+                val destination = currentRoute?.destination?.route ?: "EmptyBackStack"
+
+                if(destination != item.route) {
+                    navController.navigate(item.route)
+                }
             }
         }
     }

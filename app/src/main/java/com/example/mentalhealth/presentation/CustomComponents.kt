@@ -269,11 +269,12 @@ fun JournalDatePicker(
             Text(
                 text = text,
                 color = TextWhiteColor,
-                fontSize = 20.sp
+                fontSize = 18.sp
             )
             Text(
                 text = formatDate(date),
                 color = TextWhiteColor,
+                fontSize = 16.sp,
                 modifier = Modifier
                     .clickable {
                         mDatePickerDialog.show()

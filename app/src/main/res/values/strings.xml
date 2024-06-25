@@ -67,6 +67,7 @@
     <string name="pick_your_birthdate">Pick your birthdate</string>
     <string name="predicted_mood">Predicted mood</string>
     <string name="recommendations">Recommendations</string>
+    <string name="recommendations_history">Recommendations history</string>
     <string name="statistics">Statistics</string>
     <string name="average_wake_up_time">Average wake-up time</string>
     <string name="average_hours_slept">Average hours slept</string>
@@ -78,4 +79,5 @@
     <string name="average_energy_level">Average energy level</string>
     <string name="average_love_level">Average love level</string>
     <string name="your_daily_feelings">Your daily feelings</string>
+    <string name="no_recommendations_found">No recommendations found</string>
 </resources>

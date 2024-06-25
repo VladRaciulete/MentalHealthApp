@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mentalhealth.R
 import com.example.mentalhealth.presentation.CustomPercentageComponent
@@ -57,8 +56,7 @@ fun StatisticsScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.statistics),
-                    color = TextWhiteColor,
-                    fontSize = 20.sp
+                    color = TextWhiteColor
                 )
             }
 
@@ -81,8 +79,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_wake_up_time) +
                                 ": ${viewModel.averageWakeUpTime.value}",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)
@@ -90,8 +87,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_hours_slept) +
                                 ": ${viewModel.averageHoursSlept.value}",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)
@@ -99,8 +95,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_day_rating) +
                                 ": ${viewModel.averageDayRating.value}/5",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)
@@ -108,8 +103,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_goal_progress) +
                                 ": ${viewModel.averageGoalProgress.value}%",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)
@@ -124,8 +118,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_stress_level) +
                                 ": ${viewModel.averageStressLevel.value}/5",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)
@@ -140,8 +133,7 @@ fun StatisticsScreen(
                         Text(
                             text = stringResource(id = R.string.average_water_intake) +
                                     ": ${viewModel.averageWaterIntake.value}/5",
-                            color = TextWhiteColor,
-                            fontSize = 20.sp
+                            color = TextWhiteColor
                         )
                     }
 
@@ -150,8 +142,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_energy_level) +
                                 ": ${viewModel.averageEnergyLevel.value}/5",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)
@@ -160,8 +151,7 @@ fun StatisticsScreen(
                     Text(
                         text = stringResource(id = R.string.average_love_level) +
                                 ": ${viewModel.averageLoveLevel.value}/5",
-                        color = TextWhiteColor,
-                        fontSize = 20.sp
+                        color = TextWhiteColor
                     )
 
                     CustomSpacerBorder(20, 20, FocusedBorderColor)

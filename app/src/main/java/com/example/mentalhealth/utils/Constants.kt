@@ -15,7 +15,7 @@ object Constants {
         BottomMenuItem(
             "Recommendations",
             R.drawable.ic_recommended,
-            Screen.RecommendationsScreen.route
+            Screen.DailyRecommendationsScreen.route
         ),
         BottomMenuItem(
             "Statistics",

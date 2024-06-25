@@ -30,9 +30,10 @@ class RecommendationsViewModel @Inject constructor(
     var recommendation2 = mutableStateOf("")
     var recommendation3 = mutableStateOf("")
     var recommendation4 = mutableStateOf("")
+    var loadedData = mutableStateOf(false)
 
     init {
-        getMLOutput()
+        getTodayMLOutput()
     }
 
     fun getMLOutput() {
@@ -54,8 +55,49 @@ class RecommendationsViewModel @Inject constructor(
                     recommendation4.value =
                         Constants.personalizedRecommendations[mlOutput.recommendation4]
 
+                    loadedData.value = true
+
                     appStateViewModel.uiState.value = UiState.Success(SuccessEvent.ML_DATA_LOADED)
                 } else {
+                    loadedData.value = false
+                    appStateViewModel.uiState.value =
+                        UiState.Error(ErrorEvent.ERROR_RETRIEVING_ML_DATA)
+                }
+            } catch (e: Exception) {
+                appStateViewModel.uiState.value =
+                    UiState.Error(e.message ?: ErrorEvent.ERROR_RETRIEVING_ML_DATA)
+            }
+        }
+    }
+
+    fun getTodayMLOutput() {
+        viewModelScope.launch {
+            try {
+                resetViewModelFields()
+                appStateViewModel.uiState.value = UiState.Loading
+
+                val yesterdayDate = LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT))
+
+                val mlOutput = getMLOutputUseCase(
+                    LocalDate.now().format(DateTimeFormatter.ofPattern(Constants.APP_DATE_FORMAT))
+                )
+
+                if (mlOutput != null) {
+                    moodPrediction.value = Constants.todayFeelings[mlOutput.moodPrediction]
+                    recommendation1.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation1]
+                    recommendation2.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation2]
+                    recommendation3.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation3]
+                    recommendation4.value =
+                        Constants.personalizedRecommendations[mlOutput.recommendation4]
+
+                    loadedData.value = true
+
+                    appStateViewModel.uiState.value = UiState.Success(SuccessEvent.ML_DATA_LOADED)
+                } else {
+                    loadedData.value = false
                     appStateViewModel.uiState.value =
                         UiState.Error(ErrorEvent.ERROR_RETRIEVING_ML_DATA)
                 }

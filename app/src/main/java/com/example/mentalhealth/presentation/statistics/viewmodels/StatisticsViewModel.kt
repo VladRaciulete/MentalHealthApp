@@ -41,6 +41,10 @@ class StatisticsViewModel @Inject constructor(
     var dayFeelings = mutableMapOf<String, Int>()
     var careOfYourself = mutableMapOf<String, Int>()
 
+    init {
+        loadStatistics()
+    }
+
     private fun getJournalEntries(startDate: String, endDate: String) {
         viewModelScope.launch {
             try {

@@ -68,6 +68,7 @@
     <string name="pick_your_birthdate">Alege data de nastere</string>
     <string name="predicted_mood">Starea de spirit prezisa</string>
     <string name="recommendations">Recomdandari</string>
+    <string name="recommendations_history">Istoria recomdandarilor</string>
     <string name="statistics">Statistici</string>
     <string name="average_wake_up_time">Ora medie de trezire</string>
     <string name="average_hours_slept">Numarul mediu de ore de somn</string>
@@ -79,4 +80,5 @@
     <string name="average_energy_level">Nivelul mediu de energie</string>
     <string name="average_love_level">Nivelul mediu de iubire</string>
     <string name="your_daily_feelings">Sentimentele zilnice</string>
+    <string name="no_recommendations_found">Nu exista recomandari</string>
 </resources>

@@ -123,6 +123,7 @@ class ProfileViewModel @Inject constructor(
                         )
 
                 resetViewModelFields()
+                loadUserData()
             } catch (e: Exception) {
                 appStateViewModel.uiState.value =
                     UiState.Error(e.message ?: ErrorEvent.ERROR_UPDATING_USER_DATA)

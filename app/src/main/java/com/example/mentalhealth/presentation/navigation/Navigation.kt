@@ -1,5 +1,6 @@
 package com.example.mentalhealth.presentation.navigation
 
+import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -25,11 +26,14 @@ import com.example.mentalhealth.presentation.journal.viewmodels.JournalViewModel
 import com.example.mentalhealth.presentation.profile.screens.AccountSettingsScreen
 import com.example.mentalhealth.presentation.profile.screens.NotificationsSettingsScreen
 import com.example.mentalhealth.presentation.profile.screens.ProfileScreen
-import com.example.mentalhealth.presentation.recommendations.screens.RecommendationsScreen
+import com.example.mentalhealth.presentation.recommendations.screens.DailyRecommendationsScreen
+import com.example.mentalhealth.presentation.recommendations.screens.RecommendationsHistoryScreen
 import com.example.mentalhealth.presentation.recommendations.viewmodels.RecommendationsViewModel
 import com.example.mentalhealth.presentation.statistics.screens.StatisticsScreen
 import com.example.mentalhealth.presentation.statistics.viewmodels.StatisticsViewModel
 import com.example.mentalhealth.utils.AuthState
+import com.example.mentalhealth.utils.SuccessEvent
+import com.example.mentalhealth.utils.UiState
 
 @Composable
 fun Navigation(appStateViewModel: AppStateViewModel) {
@@ -92,8 +96,12 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
                 StatisticsScreen(navController = navController, viewModel = statisticsViewModel)
             }
 
-            composable(route = Screen.RecommendationsScreen.route) {
-                RecommendationsScreen(navController = navController, viewModel = recommendationsViewModel)
+            composable(route = Screen.DailyRecommendationsScreen.route) {
+                DailyRecommendationsScreen(navController = navController, viewModel = recommendationsViewModel)
+            }
+
+            composable(route = Screen.RecommendationsHistoryScreen.route) {
+                RecommendationsHistoryScreen(navController = navController, viewModel = recommendationsViewModel)
             }
 
             composable(route = Screen.ProfileScreen.route) {
@@ -110,6 +118,34 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
         }
     }
 
+    when (appStateViewModel.uiState.value) {
+        is UiState.Idle -> {
+        }
+
+        is UiState.Loading -> {
+            CustomProgressIndicator()
+        }
+
+        is UiState.Success -> {
+            val successMessage = (appStateViewModel.uiState.value as UiState.Success).message
+
+            when(successMessage){
+                SuccessEvent.SUCCESS -> {
+                }
+                SuccessEvent.USER_ACCOUNT_CREATED -> {
+                }
+                SuccessEvent.JOURNAL_DATA_ADDED -> {
+                    statisticsViewModel.loadStatistics()
+                    recommendationsViewModel.getTodayMLOutput()
+                }
+            }
+            appStateViewModel.uiState.value = UiState.Idle
+        }
+
+        is UiState.Error -> {
+        }
+    }
+
     when (appStateViewModel.authState.value) {
         is AuthState.Authenticated -> {
         }
@@ -123,6 +159,7 @@ fun Navigation(appStateViewModel: AppStateViewModel) {
             journalViewModel.resetViewModelFields()
             recommendationsViewModel.resetViewModelFields()
             profileViewModel.resetViewModelFields()
+            profileViewModel.loadUserData()
             statisticsViewModel.resetViewModelFields()
             journalViewModel.resetViewModelDate()
             recommendationsViewModel.resetViewModelDate()

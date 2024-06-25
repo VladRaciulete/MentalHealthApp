@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,16 +23,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mentalhealth.R
+import com.example.mentalhealth.presentation.CustomSpacerBorder
 import com.example.mentalhealth.presentation.JournalDatePicker
 import com.example.mentalhealth.presentation.bottomMenu.BottomMenu
 import com.example.mentalhealth.presentation.recommendations.viewmodels.RecommendationsViewModel
 import com.example.mentalhealth.ui.theme.AccentColor
 import com.example.mentalhealth.ui.theme.BackgroundColor
+import com.example.mentalhealth.ui.theme.FocusedBorderColor
 import com.example.mentalhealth.ui.theme.TextWhiteColor
 import com.example.mentalhealth.utils.Constants
 
 @Composable
-fun RecommendationsScreen(
+fun RecommendationsHistoryScreen(
     navController: NavController,
     viewModel: RecommendationsViewModel
 ) {
@@ -66,7 +69,7 @@ fun RecommendationsScreen(
                 )
 
                 JournalDatePicker(
-                    text = stringResource(id = R.string.recommendations),
+                    text = stringResource(id = R.string.recommendations_history),
                     viewModel.date.value
                 ) { newDate ->
                     viewModel.date.value = newDate
@@ -91,61 +94,76 @@ fun RecommendationsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
-                Text(
-                    text = stringResource(id = R.string.predicted_mood) + ":",
-                    color = TextWhiteColor,
-                    fontSize = 20.sp
-                )
+                Button(
+                    onClick = {
+                        viewModel.getTodayMLOutput()
+                        navController.popBackStack()
+                    }
+                ) {
+                    Text(text = stringResource(id = R.string.back))
+                }
 
-                Spacer(modifier = Modifier.height(10.dp))
+                if(viewModel.loadedData.value){
+                    CustomSpacerBorder(20, 20, FocusedBorderColor)
 
-                Text(
-                    text = viewModel.moodPrediction.value,
-                    color = TextWhiteColor,
-                    fontSize = 16.sp
-                )
+                    Text(
+                        text = stringResource(id = R.string.predicted_mood) + ":",
+                        color = TextWhiteColor
+                    )
 
-                Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                Text(
-                    text = stringResource(id = R.string.recommendations) + ":",
-                    color = TextWhiteColor,
-                    fontSize = 20.sp
-                )
+                    Text(
+                        text = viewModel.moodPrediction.value,
+                        color = TextWhiteColor
+                    )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                    CustomSpacerBorder(20, 20, FocusedBorderColor)
 
-                Text(
-                    text = viewModel.recommendation1.value,
-                    color = TextWhiteColor,
-                    fontSize = 16.sp
-                )
+                    Text(
+                        text = stringResource(id = R.string.recommendations) + ":",
+                        color = TextWhiteColor
+                    )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                Text(
-                    text = viewModel.recommendation2.value,
-                    color = TextWhiteColor,
-                    fontSize = 16.sp
-                )
+                    Text(
+                        text = viewModel.recommendation1.value,
+                        color = TextWhiteColor
+                    )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
-                Text(
-                    text = viewModel.recommendation3.value,
-                    color = TextWhiteColor,
-                    fontSize = 16.sp
-                )
+                    Text(
+                        text = viewModel.recommendation2.value,
+                        color = TextWhiteColor
+                    )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
-                Text(
-                    text = viewModel.recommendation4.value,
-                    color = TextWhiteColor,
-                    fontSize = 16.sp
-                )
+                    Text(
+                        text = viewModel.recommendation3.value,
+                        color = TextWhiteColor
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = viewModel.recommendation4.value,
+                        color = TextWhiteColor
+                    )
+                    CustomSpacerBorder(20, 20, FocusedBorderColor)
+                } else {
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.no_recommendations_found),
+                        color = TextWhiteColor,
+                        fontSize = 20.sp
+                    )
+                }
             }
         }
 

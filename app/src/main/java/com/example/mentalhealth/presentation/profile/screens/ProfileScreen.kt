@@ -34,10 +34,6 @@ fun ProfileScreen(
     navController: NavController,
     viewModel: ProfileViewModel
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.loadUserData()
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
